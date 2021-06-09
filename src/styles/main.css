@@ -1,0 +1,90 @@
+:root {
+  --elliotPrimary: #72afd4;
+  --elliotSecondary: #577399;
+  --elliotTealBlue: #287896;
+  --elliotCta: #ffa62b;
+  --elliotVisited: #7e359e;
+  --elliotLinkSearch: #1a0dab;
+  --dimGrey: #999;
+  --lighterGrey: #f0f0f0;
+  --lightGreyBackground: #f7f7f7;
+  --lightAzureBackground: #f7f7ff;
+  --lightGrey: #e8e8e8;
+  --textColor: #333;
+  --error: #ad081b;
+  --fontCommon: 'Arial', 'Arial Bold', 'Gadget', sans-serif;
+  --fontBlack: 'Arial Black', 'Arial Bold', 'Gadget', sans-serif;
+  --zindex0: 0;
+  --zindex10: 10;
+  --zindex50: 50;
+  --zindex100: 100;
+  --zindex200: 200;
+  --zindex300: 300;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: white;
+  color: var(--textColor);
+  font-weight: 400;
+  min-height: 100%;
+  line-height: 1.5;
+  font-family: var(--fontCommon);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--fontCommon);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+h2 {
+  font-size: 26px;
+  font-size: 1.8em;
+}
+
+a {
+  text-decoration: none;
+  color: var(--elliotPrimary);
+}
+
+p {
+  margin: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+.hidden-element {
+  height: 0;
+  width: 0;
+  display: none;
+}
+
+/* odometer custom style */
+.odometer {
+  color: var(--elliotSecondary);
+  font-size: 22px;
+  letter-spacing: 0.3em;
+  font-family: var(--fontCommon);
+  font-weight: 700;
+}
+
+@media (min-width: 768px) {
+  .odometer {
+    font-size: 26px;
+  }
+}
