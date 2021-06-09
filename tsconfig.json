@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "target": "es5",
+    "module": "es6",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "jsx": "react",
+    "lib": ["es2015", "dom", "dom.iterable"],
+    "noImplicitAny": true,
+    "preserveConstEnums": true,
+    "removeComments": true,
+    "sourceMap": true,
+    "strict": true,
+    "typeRoots": ["node_modules/@types", "types"],
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "target"]
+}
