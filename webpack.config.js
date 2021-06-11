@@ -31,8 +31,10 @@ const config = {
         loader: 'awesome-typescript-loader',
       },
       {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        test: /\.(css)$/,
+        use: isProduction
+          ? [MiniCssExtractPlugin.loader, 'css-loader']
+          : ['style-loader', 'css-loader'],
       },
       {
         test: /\.(gif|jpe?g|png)$/,
@@ -65,7 +67,7 @@ const config = {
       template: `./target/${buildTarget}/index.html`,
     }),
     new MiniCssExtractPlugin({
-      filename: isWeb ? '[name].[hash:12].css' : '[name].css',
+      filename: isWeb ? '[name].[contenthash].css' : '[name].css',
     }),
     new webpack.EnvironmentPlugin({
       BUILD_TARGET: 'web',
