@@ -1,39 +1,33 @@
 import React, { useState, useEffect, useContext, useRef } from 'react'
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
 import { useForm, FormProvider } from 'react-hook-form'
 import { Input } from '../Forms/Inputs/Inputs'
 import { UserContext } from '../../context/UserContext'
 import fetchJsonp from 'fetch-jsonp'
 import classnames from 'classnames'
-import useTranslation from 'next-translate/useTranslation'
 import styles from './SearchBar.module.css'
 import SearchIcon from '../Icons/SearchIcon'
-import { queryNoWitheSpace } from '../../helpers/_utils'
-
-type SearchProps = {
-  big?: boolean
-}
+// import { queryNoWitheSpace } from '../../helpers/_utils'
 
 const SUGGESTED_WORDS_URL = 'https://suggest.finditnowonline.com/SuggestionFeed/Suggestion?format=jsonp&gd=SY1002042&q='
 
-const SearchBar = ({ big }: SearchProps) => {
-  const { t } = useTranslation()
-  const router = useRouter()
+const SearchBar = () => {
+  // const router = useRouter()
 
   // Query params can be of type `string[]` in case a name is used multiple times in the URL.
   // See https://nodejs.org/api/querystring.html#querystring_querystring_parse_str_sep_eq_options
   // We assume here that each name exists only once in the query and thus is `string`.
-  const query = router.query.query as string
-  const type = router.query.type as string
-  const method = router.query.method as string
+  // const query = router.query.query as string
+  // const type = router.query.type as string
+  // const method = router.query.method as string
 
   const { userState, setUserState } = useContext(UserContext)
 
-  const initType = typeof type === 'undefined' ? 'web' : type
-  const initSearchValue = typeof query === 'undefined' ? '' : query
-  const [searchValue, setSearchValue] = useState<string>(initSearchValue)
-  const [typeValue, setTypeValue] = useState<string | string[]>(initType)
-  const [highlightIndex, setHighlightIndex] = useState<number>(null)
+  // const initType = typeof type === 'undefined' ? 'web' : type
+  // const [typeValue, setTypeValue] = useState<string | string[]>(initType)
+
+  const [searchValue, setSearchValue] = useState<string>('')
+  const [highlightIndex, setHighlightIndex] = useState<number>(-1)
   const [isSuggestionOpen, setIsSuggestionOpen] = useState<boolean>(false)
   const [suggestedWords, setSuggestedWords] = useState<Array<string>>([])
   const [searchSuggestedWords, setSearchSuggestedWords] = useState(true)
@@ -48,19 +42,20 @@ const SearchBar = ({ big }: SearchProps) => {
   })
   const { handleSubmit, register } = methods
 
-  if (type !== typeValue && typeValue !== initType) {
-    setTypeValue(type)
-  }
 
-  useEffect(() => {
-    if (method === 'topbar') {
-      setUserState({ numOfSearches: Number(userState.numOfSearches) + 1 })
-    }
+  // if (type !== typeValue && typeValue !== initType) {
+  //   setTypeValue(type)
+  // }
 
-    if (query !== undefined && query !== searchValue) {
-      setSearchValue(query)
-    }
-  }, [query])
+  // useEffect(() => {
+  //   if (method === 'topbar') {
+  //     setUserState({ numOfSearches: Number(userState.numOfSearches) + 1 })
+  //   }
+
+  //   if (query !== undefined && query !== searchValue) {
+  //     setSearchValue(query)
+  //   }
+  // }, [query])
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -81,7 +76,7 @@ const SearchBar = ({ big }: SearchProps) => {
         case 'ArrowDown':
           setSearchSuggestedWords(false)
           return setHighlightIndex((prevIndex: number) => {
-            if (prevIndex === null) {
+            if (prevIndex === -1) {
               return 0
             }
 
@@ -97,8 +92,7 @@ const SearchBar = ({ big }: SearchProps) => {
           break
 
         default:
-          setHighlightIndex(null)
-        // setSearchValue(event.target.defaultValue)
+          setHighlightIndex(-1)
       }
     }
     document.body.addEventListener('keydown', handleKeyDown)
@@ -130,10 +124,10 @@ const SearchBar = ({ big }: SearchProps) => {
   }
 
   function resetDropdown(event) {
-    if (!big) {
-      setIsSuggestionOpen(false)
-    }
-    setHighlightIndex(null)
+    // if (!big) {
+    //   setIsSuggestionOpen(false)
+    // }
+    setHighlightIndex(-1)
     event && event.target.blur()
   }
 
@@ -144,8 +138,9 @@ const SearchBar = ({ big }: SearchProps) => {
 
     setUserState({ numOfSearches: Number(userState.numOfSearches) + 1 })
 
-    const queryNoSpace = queryNoWitheSpace(searchString)
-    router.push(`search?query=${queryNoSpace}&type=${typeValue}`)
+    // TODO: Redirect to elliotforwater.com?? or is happening from manifest.js?
+    // const queryNoSpace = queryNoWitheSpace(searchString)
+    // router.push(`search?query=${queryNoSpace}&type=web`)
     resetDropdown(event)
   }
 
@@ -172,17 +167,17 @@ const SearchBar = ({ big }: SearchProps) => {
               name='query'
               type='search'
               value={searchValue}
-              className={big ? styles.inputBig : styles.input}
+              className={styles.input}
               onChange={(el) => handleOnChange(el.target.value)}
               onFocus={(el) => handleOnChange(el.target.value)}
               onBlur={resetDropdown}
               autoComplete='off'
               autoCorrect='off'
               spellCheck='false'
-              placeholder={t('common:search_input')}
+              placeholder='Search the web to give water...'
               register={register}
             />
-            <button className={big ? styles.buttonBig : styles.button} type='submit'>
+            <button className={styles.button} type='submit'>
               <SearchIcon color='var(--elliotPrimary)' size={16} />
             </button>
           </form>
@@ -190,7 +185,7 @@ const SearchBar = ({ big }: SearchProps) => {
       </FormProvider>
 
       {isSuggestionOpen && (
-        <ul className={big ? styles.autosuggestResultsBig : styles.autosuggestResults}>
+        <ul className={styles.autosuggestResults}>
           {suggestedWords.map((word, i) => (
             <li
               key={i}

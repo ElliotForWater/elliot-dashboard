@@ -1,3 +1,3 @@
 declare module "*.module.css";
 
-declare module 'react-odometerjs';
+declare module 'react-odometerjs'
