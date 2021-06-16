@@ -1,6 +1,6 @@
 import React from 'react'
 import { UserContext } from './context/UserContext'
-import { useUserStateSyncedWithCookies } from '../hooks/useUserStateSyncedWithCookies'
+import { useUserStateSyncedWithCookies } from './hooks/useUserStateSyncedWithCookies'
 
 import Dashboard from './views/Dashboard'
 

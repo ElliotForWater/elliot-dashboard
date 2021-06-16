@@ -7,7 +7,7 @@ import fetchJsonp from 'fetch-jsonp'
 import classnames from 'classnames'
 import styles from './SearchBar.module.css'
 import SearchIcon from '../Icons/SearchIcon'
-// import { queryNoWitheSpace } from '../../helpers/_utils'
+import { queryNoWitheSpace } from '../../helpers/_utils'
 
 const SUGGESTED_WORDS_URL = 'https://suggest.finditnowonline.com/SuggestionFeed/Suggestion?format=jsonp&gd=SY1002042&q='
 
@@ -139,8 +139,11 @@ const SearchBar = () => {
     setUserState({ numOfSearches: Number(userState.numOfSearches) + 1 })
 
     // TODO: Redirect to elliotforwater.com?? or is happening from manifest.js?
-    // const queryNoSpace = queryNoWitheSpace(searchString)
+    const queryNoSpace = queryNoWitheSpace(searchString)
     // router.push(`search?query=${queryNoSpace}&type=web`)
+    const redirectQuery = `https://elliotforwater.com/search?query=${queryNoSpace}&type=web`
+
+    window.location.href = redirectQuery
     resetDropdown(event)
   }
 
