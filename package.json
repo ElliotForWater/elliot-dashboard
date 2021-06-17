@@ -50,7 +50,6 @@
     "autoprefixer": "^10.2.6",
     "awesome-typescript-loader": "^5.2.1",
     "babel-eslint": "^10.1.0",
-    "babel-jest": "^27.0.2",
     "babel-loader": "^8.2.2",
     "classnames": "^2.3.1",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
