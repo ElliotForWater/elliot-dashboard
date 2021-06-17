@@ -143,6 +143,7 @@ const SearchBar = () => {
     
     resetDropdown()
   }
+  
 
   function handleOnMouseDown(word: string) {
     setSearchValue(word)
