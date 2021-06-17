@@ -110,11 +110,11 @@
     }
   },
   "lint-staged": {
-    "*.{js,ts,tsx}": [
+    "**/*.{js,ts,tsx}": [
       "prettier --write",
       "eslint --fix --quiet"
     ],
-    "*.css": [
+    "**/*.css": [
       "stylelint"
     ]
   }
