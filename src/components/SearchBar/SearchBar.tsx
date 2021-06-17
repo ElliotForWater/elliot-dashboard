@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from 'react'
+import React, { useState, useEffect, useContext, useRef, FocusEventHandler } from 'react'
 // import { useRouter } from 'next/router'
 import { useForm, FormProvider } from 'react-hook-form'
 import { Input } from '../Forms/Inputs/Inputs'
@@ -58,14 +58,14 @@ const SearchBar = () => {
   // }, [query])
 
   useEffect(() => {
-    const handleKeyDown = (event) => {
+    const handleKeyDown = (event:KeyboardEvent) => {
       const { key } = event
 
       switch (key) {
         case 'ArrowUp':
           event.preventDefault()
           setSearchSuggestedWords(false)
-          return setHighlightIndex((prevIndex: number) => {
+          return setHighlightIndex((prevIndex:number) => {
             if (prevIndex === 0) {
               return prevIndex
             } else {
@@ -75,7 +75,7 @@ const SearchBar = () => {
 
         case 'ArrowDown':
           setSearchSuggestedWords(false)
-          return setHighlightIndex((prevIndex: number) => {
+          return setHighlightIndex((prevIndex:number) => {
             if (prevIndex === -1) {
               return 0
             }
@@ -123,7 +123,7 @@ const SearchBar = () => {
     search(searchValue)
   }
 
-  function resetDropdown(event) {
+  function resetDropdown(event?:React.FocusEvent<HTMLInputElement>) {
     // if (!big) {
     //   setIsSuggestionOpen(false)
     // }
@@ -131,20 +131,17 @@ const SearchBar = () => {
     event && event.target.blur()
   }
 
-  function search(searchString: string, event?) {
+  function search(searchString: string) {
     if (!searchString) {
       return
     }
 
     setUserState({ numOfSearches: Number(userState.numOfSearches) + 1 })
-
-    // TODO: Redirect to elliotforwater.com?? or is happening from manifest.js?
     const queryNoSpace = queryNoWitheSpace(searchString)
-    // router.push(`search?query=${queryNoSpace}&type=web`)
     const redirectQuery = `https://elliotforwater.com/search?query=${queryNoSpace}&type=web`
-
     window.location.href = redirectQuery
-    resetDropdown(event)
+    
+    resetDropdown()
   }
 
   function handleOnMouseDown(word: string) {

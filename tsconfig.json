@@ -6,21 +6,26 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "jsx": "react",
-    "lib": ["es2015", "dom", "dom.iterable"],
+    "lib": ["es2017", "dom", "dom.iterable"],
+    "strict": true,
+    "removeComments": true,
+
     "noImplicitAny": true,
     "preserveConstEnums": true,
-    "removeComments": true,
     "sourceMap": true,
-    "strict": true,
-    "typeRoots": ["node_modules/@types", "types"],
     "allowSyntheticDefaultImports": true,
-    "types": ["node"]
+    "types": ["node", "jest"],
+
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "resolveJsonModule": true
   },
+  "typeRoots": ["./node_modules/@types", "./types"],
   "plugins": [
     {
       "name": "typescript-plugin-css-modules"
     }
   ],
-  "include": ["src", "src/ global/.d.ts"],
-  "exclude": ["node_modules", "dist", "target"]
+  "exclude": ["node_modules", "dist", "target", "postcss.config.js", "**/*.test.ts", "**/*.test.tsx", "coverage"],
+  "include": ["src", "src/global/.d.ts"]
 }
