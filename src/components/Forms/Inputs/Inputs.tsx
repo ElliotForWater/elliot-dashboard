@@ -14,11 +14,11 @@ export function Input({ name, type, register, rules = {}, errors = {}, customCla
     <div className={type === 'checkbox' || type === 'radiobox' ? styles.inputWrapInline : styles.inputWrap}>
       <input
         className={classnames({ [styles.inputError]: errors[name] }, customClassname, styles.input)}
-        name={name}
         type={type}
-        ref={register()}
+        {...register(name, rules)}
         {...rest}
       />
+
       {errors[name] && <div className={styles.error}>{errors[name].message}</div>}
     </div>
   )
@@ -61,7 +61,7 @@ export function Textarea({ name, rows, register, customClassname, rules = {}, er
       <textarea
         className={classnames({ [styles.inputError]: errors[name] }, customClassname, styles.textarea)}
         name={name}
-        ref={register(rules)}
+        {...register(name, rules)}
         rows={rows}
         {...rest}
       />
