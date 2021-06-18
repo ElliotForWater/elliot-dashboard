@@ -12,7 +12,7 @@ const version = require('./package.json').version
 
 const config = {
   entry: {
-    main: ['./src/index.tsx', './src/styles/main.css'],
+    main: ['./src/index.tsx', './src/main.css'],
   },
   target: 'web',
   output: {
@@ -28,25 +28,34 @@ const config = {
     rules: [
       {
         test: /\.tsx?$/,
-        loader: 'awesome-typescript-loader',
+        loader: 'ts-loader',
       },
       {
         test: /\.(css)$/,
-        use: isProduction
-          ? [MiniCssExtractPlugin.loader, 'css-loader']
-          : ['style-loader', 'css-loader'],
+        use: isProduction ? [MiniCssExtractPlugin.loader, 'css-loader'] : ['style-loader', 'css-loader'],
       },
       {
-        test: /\.(gif|jpe?g|png)$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10000,
-          name: isWeb ? '[name].[chunkhash:12].[ext]' : '[name].js',
-        },
+        test: /\.(png|jp(e*)g|gif)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'images/[hash]-[name].[ext]',
+            },
+          },
+        ],
       },
       {
         test: /\.svg$/,
-        loader: 'raw-loader',
+        use: [
+          {
+            loader: 'svg-url-loader',
+
+            options: {
+              limit: 10000,
+            },
+          },
+        ],
       },
     ],
   },

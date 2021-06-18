@@ -1,5 +1,5 @@
 import React from 'react'
-export interface UserState {
+export interface UserStateProps {
   numOfSearches: number
   language: number
   adultContentFilter: number
@@ -7,11 +7,11 @@ export interface UserState {
   isModalOpen: boolean
 }
 export interface UserContextProps {
-  userState: UserState
-  setUserState: (userState: Partial<UserState>) => void
+  userState: UserStateProps
+  setUserState: (userState: Partial<UserStateProps>) => void
 }
 
-export const USER_STATE_DEFAULT: UserState = {
+export const USER_STATE_DEFAULT: UserStateProps = {
   numOfSearches: 0,
   language: 1, // English
   adultContentFilter: 1, // Moderate

@@ -16,7 +16,7 @@ export function Input({ name, type, register, rules = {}, errors = {}, customCla
         className={classnames({ [styles.inputError]: errors[name] }, customClassname, styles.input)}
         name={name}
         type={type}
-        ref={register(rules)}
+        ref={register()}
         {...rest}
       />
       {errors[name] && <div className={styles.error}>{errors[name].message}</div>}
