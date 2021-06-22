@@ -3,6 +3,7 @@ import SearchBar from '../components/SearchBar/SearchBar'
 import Odometer from 'react-odometerjs'
 import styles from './Dashboard.module.css'
 import Logo from '../images/logo.svg'
+import Header from '../components/Header/Header'
 
 function getLitersOfWater(litersOfWaterPerMillisecond: number) {
   // Set dates from when we started delivering water until today
@@ -30,31 +31,34 @@ function Dashboard() {
   }, [])
 
   return (
-    <section className={styles.searchBarSection}>
-      <div className={styles.logo}>
-        <div className={styles.logoImgWrap}>
-          <img className={styles.logoImg} src={Logo} alt='Elliot For Water' title='Elliot For Water' />
+    <div>
+      <Header />
+      <section className={styles.searchBarSection}>
+        <div className={styles.logo}>
+          <div className={styles.logoImgWrap}>
+            <img className={styles.logoImg} src={Logo} alt='Elliot For Water' title='Elliot For Water' />
+          </div>
+          <p className={styles.logoSubtitle}>For Water</p>
         </div>
-        <p className={styles.logoSubtitle}>For Water</p>
-      </div>
-      <div className={styles.searchWrap}>
-        <SearchBar />
-      </div>
-      <div className={styles.ctaContainer}>
-        <h1 className={styles.ctaTitle}>Join our community of changemakers!</h1>
-        <div className={styles.counterContainer}>
-          {Odometer !== null && (
-            <Odometer
-              // @ts-ignore
-              value={odometerValue}
-              format='(,ddd)'
-              duration={1000}
-            />
-          )}
-          <p className={styles.counterText}>Liters of water donated so far by Elliot For Water users</p>
+        <div className={styles.searchWrap}>
+          <SearchBar />
         </div>
-      </div>
-    </section>
+        <div className={styles.ctaContainer}>
+          <h1 className={styles.ctaTitle}>Join our community of changemakers!</h1>
+          <div className={styles.counterContainer}>
+            {Odometer !== null && (
+              <Odometer
+                // @ts-ignore
+                value={odometerValue}
+                format='(,ddd)'
+                duration={1000}
+              />
+            )}
+            <p className={styles.counterText}>Liters of water donated so far by Elliot For Water users</p>
+          </div>
+        </div>
+      </section>
+    </div>
   )
 }
 
