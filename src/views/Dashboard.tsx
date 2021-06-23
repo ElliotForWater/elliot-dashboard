@@ -3,7 +3,6 @@ import SearchBar from '../components/SearchBar/SearchBar'
 import Odometer from 'react-odometerjs'
 import styles from './Dashboard.module.css'
 import Logo from '../images/logo.svg'
-import Header from '../components/Header/Header'
 
 function getLitersOfWater(litersOfWaterPerMillisecond: number) {
   // Set dates from when we started delivering water until today
@@ -32,7 +31,6 @@ function Dashboard() {
 
   return (
     <div>
-      <Header />
       <section className={styles.searchBarSection}>
         <div className={styles.logo}>
           <div className={styles.logoImgWrap}>

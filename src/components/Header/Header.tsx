@@ -13,12 +13,7 @@ const HeaderHome: FC = () => {
     <header className={styles.header}>
       <div className={styles.headerRight}>
         <div className={styles.rightSide}>
-          <div
-            className={styles.dropletContainer}
-            onMouseEnter={() => setHideTooltip(false)}
-            onMouseLeave={() => setHideTooltip(true)}
-            onClick={() => setHideTooltip((prev) => !prev)}
-          >
+          <div className={styles.dropletContainer} onClick={() => setHideTooltip((prev) => !prev)}>
             <img className={styles.dropletImg} src={Drop} />
             <Tooltip isHidden={hideTooltip} direction='right'>
               This is the number of searches you have done with Elliot for Water. Approximately, every search donates 14

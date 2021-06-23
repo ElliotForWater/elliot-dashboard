@@ -4,6 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const webpack = require('webpack')
+const dotenv = require('dotenv')
 
 const buildTarget = process.env.BUILD_TARGET || 'web'
 const isProduction = process.env.NODE_ENV === 'production'
@@ -23,6 +24,11 @@ const config = {
   mode: isProduction ? 'production' : 'development',
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
+    fallback: {
+      fs: false,
+      path: false,
+      os: false,
+    },
   },
   module: {
     rules: [
@@ -61,6 +67,9 @@ const config = {
   },
   plugins: [
     new CleanWebpackPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': JSON.stringify(dotenv.config().parsed), // it will automatically pick up key values from .env file
+    }),
     new CopyWebpackPlugin({
       patterns: [
         { from: './target/shared' },

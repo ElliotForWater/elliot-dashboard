@@ -1,5 +1,5 @@
 .header {
-  background-color: white;
+  background-color: transparent;
   display: flex;
   justify-content: space-between;
   padding: 30px;
@@ -29,6 +29,7 @@
   display: inline-flex;
   align-items: center;
   position: relative;
+  cursor: pointer;
 }
 
 .dropletImg {

@@ -7,11 +7,11 @@ interface ButtonProps {
   onClick?: (event: React.MouseEvent<HTMLElement>) => void
   children: any
   linkHref?: string
-  size?: 'big' | 'small'
+  size?: 'big' | 'small' | 'medium'
   target?: string
 }
 
-export default function Button({ fluid, onClick, children, linkHref, target = '_self', size = 'small' }: ButtonProps) {
+export default function Button({ fluid, onClick, children, linkHref, target = '_self', size = 'medium' }: ButtonProps) {
   return (
     <div
       className={classnames(styles.button, {

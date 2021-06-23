@@ -79,14 +79,14 @@ const SettingsForm = ({ callbackCloseSettings }) => {
                 register={register}
               />
               <label className={styles.checkboxLabel} htmlFor='openInNewTab'>
-                New tab
+                Open search results in a new tab
               </label>
             </div>
           </div>
           <div className={styles.settingsFooter}>
             <TextButton onClick={() => callbackCloseSettings()}>Close</TextButton>
             <ButtonPrimary>
-              <button type='submit'>Save'</button>
+              <button type='submit'>Save</button>
             </ButtonPrimary>
           </div>
         </form>

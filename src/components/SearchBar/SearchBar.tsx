@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext, useRef } from 'react'
-// import { useRouter } from 'next/router'
 import { useForm, FormProvider } from 'react-hook-form'
 import { Input } from '../Forms/Inputs/Inputs'
 import { UserContext } from '../../context/UserContext'
@@ -9,22 +8,8 @@ import styles from './SearchBar.module.css'
 import SearchIcon from '../Icons/SearchIcon'
 import { queryNoWitheSpace } from '../../helpers/_utils'
 
-const SUGGESTED_WORDS_URL = 'https://suggest.finditnowonline.com/SuggestionFeed/Suggestion?format=jsonp&gd=SY1002042&q='
-
 const SearchBar = () => {
-  // const router = useRouter()
-
-  // Query params can be of type `string[]` in case a name is used multiple times in the URL.
-  // See https://nodejs.org/api/querystring.html#querystring_querystring_parse_str_sep_eq_options
-  // We assume here that each name exists only once in the query and thus is `string`.
-  // const query = router.query.query as string
-  // const type = router.query.type as string
-  // const method = router.query.method as string
-
   const { userState, setUserState } = useContext(UserContext)
-
-  // const initType = typeof type === 'undefined' ? 'web' : type
-  // const [typeValue, setTypeValue] = useState<string | string[]>(initType)
 
   const [searchValue, setSearchValue] = useState<string>('')
   const [highlightIndex, setHighlightIndex] = useState<number>(-1)
@@ -41,20 +26,6 @@ const SearchBar = () => {
     },
   })
   const { handleSubmit, register } = methods
-
-  // if (type !== typeValue && typeValue !== initType) {
-  //   setTypeValue(type)
-  // }
-
-  // useEffect(() => {
-  //   if (method === 'topbar') {
-  //     setUserState({ numOfSearches: Number(userState.numOfSearches) + 1 })
-  //   }
-
-  //   if (query !== undefined && query !== searchValue) {
-  //     setSearchValue(query)
-  //   }
-  // }, [query])
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -104,7 +75,7 @@ const SearchBar = () => {
   useEffect(() => {
     const fetchSuggestedWords = async () => {
       try {
-        const res = await fetchJsonp(`${SUGGESTED_WORDS_URL}${searchValue}`)
+        const res = await fetchJsonp(`${process.env.SUGGESTED_WORDS_URL}${searchValue}`)
         const suggestedWordsArray = await res.json()
         setSuggestedWords(suggestedWordsArray[1].slice(0, 10))
         return
@@ -119,9 +90,6 @@ const SearchBar = () => {
   }, [searchValue])
 
   function resetDropdown(event?: React.FocusEvent<HTMLInputElement>) {
-    // if (!big) {
-    //   setIsSuggestionOpen(false)
-    // }
     setHighlightIndex(-1)
     event && event.target.blur()
   }

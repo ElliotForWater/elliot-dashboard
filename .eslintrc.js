@@ -31,5 +31,6 @@ module.exports = {
     'react/jsx-pascal-case': 'warn',
     'react/jsx-no-target-blank': 'off',
     'react/jsx-indent': 'off',
+    camelcase: ['error', { allow: ['alt_description'] }],
   },
 }

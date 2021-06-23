@@ -32,6 +32,11 @@
   font-size: 1.2em;
 }
 
+.ctaContainer {
+  margin: 0 auto;
+  text-align: center;
+}
+
 .counterContainer {
   margin: 33px auto;
   text-align: center;
@@ -67,11 +72,6 @@
     max-width: 42em;
   }
 
-  .ctaContainer {
-    margin-bottom: 14px;
-    max-width: 70%;
-  }
-
   .ctaTitle {
     font-size: 30px;
   }
@@ -82,11 +82,5 @@
 
   .counterText {
     font-size: 16px;
-  }
-}
-
-@media (min-width: 900px) {
-  .ctaContainer {
-    max-width: 55%;
   }
 }
