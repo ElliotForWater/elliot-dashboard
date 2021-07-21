@@ -24,6 +24,7 @@
       "name": "typescript-plugin-css-modules"
     }
   ],
+  "types": ["chrome"],
   "exclude": ["node_modules", "dist", "target", "postcss.config.js", "**/*.test.ts", "**/*.test.tsx", "coverage"],
   "include": ["src", "src/global/.d.ts"]
 }

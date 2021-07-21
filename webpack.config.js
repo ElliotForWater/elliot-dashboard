@@ -7,14 +7,21 @@ const webpack = require('webpack')
 const dotenv = require('dotenv')
 
 const buildTarget = process.env.BUILD_TARGET || 'web'
+const isChromium = process.env.BUILD_TARGET === 'chromium'
 const isProduction = process.env.NODE_ENV === 'production'
 const isWeb = buildTarget === 'web'
 const version = require('./package.json').version
 
+const entry = {
+  main: ['./src/index.tsx', './src/main.css'],
+}
+const chromiumEntry = {
+  main: ['./src/index.tsx', './src/main.css'],
+  background: ['./target/chromium/background.js'],
+}
+
 const config = {
-  entry: {
-    main: ['./src/index.tsx', './src/main.css'],
-  },
+  entry: entry,
   target: 'web',
   output: {
     path: path.resolve(__dirname, 'dist'),

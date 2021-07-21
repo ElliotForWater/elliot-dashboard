@@ -17,7 +17,6 @@ const Background: FC = function ({ children }) {
   useEffect(() => {
     async function fetchPhoto() {
       const fetchedPhoto = await fetchCollectionPhotos()
-      console.log('dashboard fetch', fetchedPhoto)
       setPhoto(fetchedPhoto)
     }
 
@@ -32,8 +31,8 @@ const Background: FC = function ({ children }) {
       {photo && (
         <footer className={styles.footer}>
           <div>
-            <a href={photo.links.html}>Photo</a> /<a href={photo.user.links.html}>{photo.user.name}</a> /
-            <a href='https://unsplash.com'>Unsplash</a>
+            <a href={photo.links.html}>Photo</a> /<a href={photo.user.links.html}> {photo.user.name}</a> /
+            <a href='https://unsplash.com'> Unsplash</a>
           </div>
           <div>{photo.location.title}</div>
         </footer>

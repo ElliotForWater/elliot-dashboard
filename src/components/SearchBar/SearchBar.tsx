@@ -1,8 +1,10 @@
+/// <reference types="chrome"/>
+
 import React, { useState, useEffect, useContext, useRef } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
+import fetchJsonp from 'fetch-jsonp'
 import { Input } from '../Forms/Inputs/Inputs'
 import { UserContext } from '../../context/UserContext'
-import fetchJsonp from 'fetch-jsonp'
 import classnames from 'classnames'
 import styles from './SearchBar.module.css'
 import SearchIcon from '../Icons/SearchIcon'
@@ -15,7 +17,6 @@ const SearchBar = () => {
   const [highlightIndex, setHighlightIndex] = useState<number>(-1)
   const [isSuggestionOpen, setIsSuggestionOpen] = useState<boolean>(false)
   const [suggestedWords, setSuggestedWords] = useState<Array<string>>([])
-  const [searchSuggestedWords, setSearchSuggestedWords] = useState(true)
   const inputEl = useRef(null)
 
   const methods = useForm({
@@ -27,6 +28,22 @@ const SearchBar = () => {
   })
   const { handleSubmit, register } = methods
 
+  function handleMessage(msg) {
+    if (msg.target === 'background') {
+      setSuggestedWords(msg.data[1].slice(0, 10))
+    }
+  }
+
+  async function fetchSuggestedWords() {
+    try {
+      const res = await fetchJsonp(`${process.env.SUGGESTED_WORDS_URL}${searchValue}`)
+      const suggestedWordsArray = await res.json()
+      return setSuggestedWords(suggestedWordsArray[1].slice(0, 10))
+    } catch {
+      console.log('error fetching suggested results')
+    }
+  }
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       const { key } = event
@@ -34,7 +51,7 @@ const SearchBar = () => {
       switch (key) {
         case 'ArrowUp':
           event.preventDefault()
-          setSearchSuggestedWords(false)
+          setIsSuggestionOpen(false)
           return setHighlightIndex((prevIndex: number) => {
             if (prevIndex === 0) {
               return prevIndex
@@ -44,7 +61,7 @@ const SearchBar = () => {
           })
 
         case 'ArrowDown':
-          setSearchSuggestedWords(false)
+          setIsSuggestionOpen(false)
           return setHighlightIndex((prevIndex: number) => {
             if (prevIndex === -1) {
               return 0
@@ -67,25 +84,25 @@ const SearchBar = () => {
     }
     document.body.addEventListener('keydown', handleKeyDown)
 
-    return () => {
-      document.body.removeEventListener('keydown', handleKeyDown)
-    }
-  }, [searchValue])
-
-  useEffect(() => {
-    const fetchSuggestedWords = async () => {
-      try {
-        const res = await fetchJsonp(`${process.env.SUGGESTED_WORDS_URL}${searchValue}`)
-        const suggestedWordsArray = await res.json()
-        setSuggestedWords(suggestedWordsArray[1].slice(0, 10))
-        return
-      } catch {
-        console.log('error fetching suggested results')
+    /* eslint-disable no-undef */
+    if (chrome?.runtime) {
+      chrome.runtime.sendMessage({
+        contentScriptQuery: 'searchValue',
+        value: searchValue,
+      })
+      chrome.runtime.onMessage.addListener(handleMessage)
+    } else {
+      if (suggestedWords) {
+        fetchSuggestedWords()
       }
     }
 
-    if (searchSuggestedWords) {
-      fetchSuggestedWords()
+    return () => {
+      document.body.removeEventListener('keydown', handleKeyDown)
+      if (chrome?.runtime) {
+        chrome.runtime.onMessage.removeListener(handleMessage)
+      }
+      /* eslint-enable no-undef */
     }
   }, [searchValue])
 
@@ -120,7 +137,6 @@ const SearchBar = () => {
     setSearchValue(value)
 
     if (value.trim()) {
-      setSearchSuggestedWords(true)
       setIsSuggestionOpen(true)
     }
   }

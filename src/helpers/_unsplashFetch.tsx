@@ -12,11 +12,11 @@ export const fetchCollectionPhotos = async function () {
       const photo = await res.json()
       return photo
     } else {
-      // grab backup photos
+      // todo: grab backup photos
       console.log('Error fetching 400')
     }
   } catch (err) {
-    // grab backup photos
+    // todo: grab backup photos
     console.log('Error server', err)
   }
 }
