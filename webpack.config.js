@@ -75,7 +75,8 @@ const config = {
   plugins: [
     new CleanWebpackPlugin(),
     new webpack.DefinePlugin({
-      'process.env': JSON.stringify(dotenv.config().parsed), // it will automatically pick up key values from .env file
+      // it will automatically pick up key values from .env file
+      'process.env': JSON.stringify(dotenv.config().parsed),
     }),
     new CopyWebpackPlugin({
       patterns: [
@@ -99,9 +100,6 @@ const config = {
       VERSION: version,
     }),
   ],
-  devServer: {
-    overlay: true,
-  },
   devtool: isWeb ? 'source-map' : false,
   stats: {
     warnings: false,
