@@ -1,6 +1,7 @@
 .wrapper,
 .form {
   position: relative;
+  display: none;
 }
 
 .input {

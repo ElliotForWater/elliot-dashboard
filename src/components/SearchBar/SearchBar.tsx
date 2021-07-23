@@ -19,7 +19,7 @@ const SearchBar = () => {
   const [isSuggestionOpen, setIsSuggestionOpen] = useState<boolean>(false)
   const [suggestedWords, setSuggestedWords] = useState<Array<string>>([])
   const inputEl = useRef(null)
-  const webextencionApi = window.chrome || window.browser
+  const webExtensionApi = window.chrome || window.browser
 
   const methods = useForm({
     defaultValues: {
@@ -87,12 +87,12 @@ const SearchBar = () => {
     document.body.addEventListener('keydown', handleKeyDown)
 
     /* eslint-disable no-undef */
-    if (webextencionApi?.runtime) {
-      webextencionApi.runtime.sendMessage({
+    if (webExtensionApi?.runtime) {
+      webExtensionApi.runtime.sendMessage({
         contentScriptQuery: 'searchValue',
         value: searchValue,
       })
-      webextencionApi.runtime.onMessage.addListener(handleMessage)
+      webExtensionApi.runtime.onMessage.addListener(handleMessage)
     } else {
       if (suggestedWords) {
         fetchSuggestedWords()
@@ -101,7 +101,7 @@ const SearchBar = () => {
 
     return () => {
       document.body.removeEventListener('keydown', handleKeyDown)
-      if (webextencionApi?.runtime) {
+      if (webExtensionApi?.runtime) {
         chrome.runtime.onMessage.removeListener(handleMessage)
       }
       /* eslint-enable no-undef */
