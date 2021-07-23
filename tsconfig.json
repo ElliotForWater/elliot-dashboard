@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
     "outDir": "dist",
-    "target": "es5",
+    "target": "es6",
     "module": "es6",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "jsx": "react",
-    "lib": ["es2017", "dom", "dom.iterable"],
+    "lib": ["es6", "es2017", "dom", "dom.iterable"],
     "strict": true,
     "removeComments": true,
     "noImplicitAny": false,
@@ -24,7 +24,7 @@
       "name": "typescript-plugin-css-modules"
     }
   ],
-  "types": ["chrome"],
+  "types": ["chrome", "browser"],
   "exclude": ["node_modules", "dist", "target", "postcss.config.js", "**/*.test.ts", "**/*.test.tsx", "coverage"],
   "include": ["src", "src/global/.d.ts"]
 }

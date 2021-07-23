@@ -1,5 +1,4 @@
 /// <reference types="chrome"/>
-
 import React, { useState, useEffect, useContext, useRef } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import fetchJsonp from 'fetch-jsonp'
@@ -10,6 +9,8 @@ import styles from './SearchBar.module.css'
 import SearchIcon from '../Icons/SearchIcon'
 import { queryNoWitheSpace } from '../../helpers/_utils'
 
+declare var window: any
+
 const SearchBar = () => {
   const { userState, setUserState } = useContext(UserContext)
 
@@ -18,6 +19,7 @@ const SearchBar = () => {
   const [isSuggestionOpen, setIsSuggestionOpen] = useState<boolean>(false)
   const [suggestedWords, setSuggestedWords] = useState<Array<string>>([])
   const inputEl = useRef(null)
+  const webextencionApi = window.chrome || window.browser
 
   const methods = useForm({
     defaultValues: {
@@ -29,7 +31,7 @@ const SearchBar = () => {
   const { handleSubmit, register } = methods
 
   function handleMessage(msg) {
-    if (msg.target === 'background') {
+    if (msg.target === 'fetch-suggestion') {
       setSuggestedWords(msg.data[1].slice(0, 10))
     }
   }
@@ -85,12 +87,12 @@ const SearchBar = () => {
     document.body.addEventListener('keydown', handleKeyDown)
 
     /* eslint-disable no-undef */
-    if (chrome?.runtime) {
-      chrome.runtime.sendMessage({
+    if (webextencionApi?.runtime) {
+      webextencionApi.runtime.sendMessage({
         contentScriptQuery: 'searchValue',
         value: searchValue,
       })
-      chrome.runtime.onMessage.addListener(handleMessage)
+      webextencionApi.runtime.onMessage.addListener(handleMessage)
     } else {
       if (suggestedWords) {
         fetchSuggestedWords()
@@ -99,7 +101,7 @@ const SearchBar = () => {
 
     return () => {
       document.body.removeEventListener('keydown', handleKeyDown)
-      if (chrome?.runtime) {
+      if (webextencionApi?.runtime) {
         chrome.runtime.onMessage.removeListener(handleMessage)
       }
       /* eslint-enable no-undef */

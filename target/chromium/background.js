@@ -16,20 +16,21 @@ chrome.action.onClicked.addListener(() => {
   openNewTab()
 })
 
-// Send event to website for "add to browser button
+// Listen to messages
 chrome.runtime.onMessage.addListener(async (req, sender, sendResponse) => {
   const id = chrome.runtime.id
   if (req.action === 'id' && req.value === id) {
     sendResponse({ id: id })
   }
 
+  // Fetch search suggestion API
   if (req.contentScriptQuery === 'searchValue') {
     const url = `https://suggest.finditnowonline.com/SuggestionFeed/Suggestion?format=jsonp&gd=SY1002042&q=${req.value}`
     try {
       const res = await fetch(url)
       if (res) {
         const data = await res.json()
-        chrome.runtime.sendMessage({ target: 'background-chrome', data })
+        chrome.runtime.sendMessage({ target: 'fetch-suggestion', data })
       } else {
         console.log('error fetching')
       }
