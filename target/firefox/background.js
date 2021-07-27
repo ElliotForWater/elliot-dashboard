@@ -1,24 +1,22 @@
 function openNewTab() {
-  chrome.tabs.create({
-    url: 'chrome://newtab',
-  })
+  browser.tabs.create({})
 }
 
 // Extension install event - open tab on install and updates
-chrome.runtime.onInstalled.addListener((details) => {
+browser.runtime.onInstalled.addListener((details) => {
   if (details?.reason === 'install' || details?.reason === 'update') {
     openNewTab()
   }
 })
 
 // Browser action click event - open tab on extension icon's click
-chrome.action.onClicked.addListener(() => {
+browser.browserAction.onClicked.addListener(() => {
   openNewTab()
 })
 
 // Listen to messages
-chrome.runtime.onMessage.addListener(async (req, sender, sendResponse) => {
-  const id = chrome.runtime.id
+browser.runtime.onMessage.addListener(async (req, sender, sendResponse) => {
+  const id = browser.runtime.id
   if (req.action === 'id' && req.value === id) {
     sendResponse({ id: id })
   }
@@ -30,7 +28,7 @@ chrome.runtime.onMessage.addListener(async (req, sender, sendResponse) => {
       const res = await fetch(url)
       if (res) {
         const data = await res.json()
-        chrome.runtime.sendMessage({ target: 'fetch-suggestion', data })
+        browser.runtime.sendMessage({ target: 'fetch-suggestion', data })
       } else {
         console.log('error fetching')
       }

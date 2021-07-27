@@ -1,20 +1,30 @@
 {
   "compilerOptions": {
     "outDir": "dist",
-    "target": "es5",
+    "target": "es6",
     "module": "es6",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "jsx": "react",
-    "lib": ["es2015", "dom", "dom.iterable"],
-    "noImplicitAny": true,
-    "preserveConstEnums": true,
-    "removeComments": true,
-    "sourceMap": true,
+    "lib": ["es6", "es2017", "dom", "dom.iterable"],
     "strict": true,
-    "typeRoots": ["node_modules/@types", "types"],
-    "allowSyntheticDefaultImports": true
+    "removeComments": true,
+    "noImplicitAny": false,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "allowSyntheticDefaultImports": true,
+    "types": ["node", "jest"],
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": false,
+    "resolveJsonModule": true
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist", "target"]
+  "typeRoots": ["./node_modules/@types", "./types"],
+  "plugins": [
+    {
+      "name": "typescript-plugin-css-modules"
+    }
+  ],
+  "types": ["chrome", "browser"],
+  "exclude": ["node_modules", "dist", "target", "postcss.config.js", "**/*.test.ts", "**/*.test.tsx", "coverage"],
+  "include": ["src", "src/global/.d.ts"]
 }

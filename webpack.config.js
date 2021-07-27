@@ -4,16 +4,24 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const webpack = require('webpack')
+const dotenv = require('dotenv')
 
 const buildTarget = process.env.BUILD_TARGET || 'web'
+const isChromium = process.env.BUILD_TARGET === 'chromium'
 const isProduction = process.env.NODE_ENV === 'production'
 const isWeb = buildTarget === 'web'
 const version = require('./package.json').version
 
+const entry = {
+  main: ['./src/index.tsx', './src/main.css'],
+}
+const chromiumEntry = {
+  main: ['./src/index.tsx', './src/main.css'],
+  background: ['./target/chromium/background.js'],
+}
+
 const config = {
-  entry: {
-    main: ['./src/index.tsx', './src/styles/main.css'],
-  },
+  entry: entry,
   target: 'web',
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -23,33 +31,53 @@ const config = {
   mode: isProduction ? 'production' : 'development',
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
+    fallback: {
+      fs: false,
+      path: false,
+      os: false,
+    },
   },
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        loader: 'awesome-typescript-loader',
+        loader: 'ts-loader',
       },
       {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        test: /\.(css)$/,
+        use: isProduction ? [MiniCssExtractPlugin.loader, 'css-loader'] : ['style-loader', 'css-loader'],
       },
       {
-        test: /\.(gif|jpe?g|png)$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10000,
-          name: isWeb ? '[name].[chunkhash:12].[ext]' : '[name].js',
-        },
+        test: /\.(png|jp(e*)g|gif)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'images/[hash]-[name].[ext]',
+            },
+          },
+        ],
       },
       {
         test: /\.svg$/,
-        loader: 'raw-loader',
+        use: [
+          {
+            loader: 'svg-url-loader',
+
+            options: {
+              limit: 10000,
+            },
+          },
+        ],
       },
     ],
   },
   plugins: [
     new CleanWebpackPlugin(),
+    new webpack.DefinePlugin({
+      // it will automatically pick up key values from .env file
+      'process.env': JSON.stringify(dotenv.config().parsed),
+    }),
     new CopyWebpackPlugin({
       patterns: [
         { from: './target/shared' },
@@ -65,16 +93,13 @@ const config = {
       template: `./target/${buildTarget}/index.html`,
     }),
     new MiniCssExtractPlugin({
-      filename: isWeb ? '[name].[hash:12].css' : '[name].css',
+      filename: isWeb ? '[name].[contenthash].css' : '[name].css',
     }),
     new webpack.EnvironmentPlugin({
       BUILD_TARGET: 'web',
       VERSION: version,
     }),
   ],
-  devServer: {
-    overlay: true,
-  },
   devtool: isWeb ? 'source-map' : false,
   stats: {
     warnings: false,
