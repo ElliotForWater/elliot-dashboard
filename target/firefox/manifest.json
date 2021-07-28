@@ -42,5 +42,18 @@
   "permissions": [
     "storage",
     "tabs"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://localhost:3000/*",
+        "*://elliotforwater.com/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "content-scripts.js"
+      ],
+      "run_at": "document_start"
+    }
   ]
 }
