@@ -1,4 +1,5 @@
 function openNewTab() {
+  console.log('open new tab')
   browser.tabs.create({})
 }
 
