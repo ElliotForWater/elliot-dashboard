@@ -1,4 +1,5 @@
 /// <reference types="chrome"/>
+
 import React, { useState, useEffect, useContext, useRef } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import fetchJsonp from 'fetch-jsonp'
@@ -8,18 +9,15 @@ import classnames from 'classnames'
 import styles from './SearchBar.module.css'
 import SearchIcon from '../Icons/SearchIcon'
 import { queryNoWitheSpace } from '../../helpers/_utils'
-
-declare var window: any
+import { extensionApiObject } from '../../App'
 
 const SearchBar = () => {
   const { userState, setUserState } = useContext(UserContext)
-
   const [searchValue, setSearchValue] = useState<string>('')
   const [highlightIndex, setHighlightIndex] = useState<number>(-1)
   const [isSuggestionOpen, setIsSuggestionOpen] = useState<boolean>(false)
   const [suggestedWords, setSuggestedWords] = useState<Array<string>>([])
   const inputEl = useRef(null)
-  const webExtensionApi = window.chrome || window.browser
 
   const methods = useForm({
     defaultValues: {
@@ -87,12 +85,12 @@ const SearchBar = () => {
     document.body.addEventListener('keydown', handleKeyDown)
 
     /* eslint-disable no-undef */
-    if (webExtensionApi?.runtime) {
-      webExtensionApi.runtime.sendMessage({
+    if (extensionApiObject?.runtime) {
+      extensionApiObject.runtime.sendMessage({
         contentScriptQuery: 'searchValue',
         value: searchValue,
       })
-      webExtensionApi.runtime.onMessage.addListener(handleMessage)
+      extensionApiObject.runtime.onMessage.addListener(handleMessage)
     } else {
       if (suggestedWords) {
         fetchSuggestedWords()
@@ -101,11 +99,11 @@ const SearchBar = () => {
 
     return () => {
       document.body.removeEventListener('keydown', handleKeyDown)
-      if (webExtensionApi?.runtime) {
+      if (extensionApiObject?.runtime) {
         chrome.runtime.onMessage.removeListener(handleMessage)
       }
-      /* eslint-enable no-undef */
     }
+    /* eslint-enable no-undef */
   }, [searchValue])
 
   function resetDropdown(event?: React.FocusEvent<HTMLInputElement>) {

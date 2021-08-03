@@ -41,7 +41,9 @@
   },
   "permissions": [
     "storage",
-    "tabs"
+    "tabs",
+    "cookies",
+    "*://*.elliotforwater.com/"
   ],
   "content_scripts": [
     {

@@ -38,7 +38,7 @@
   },
   "permissions": [
     "cookies",
-    "*://elliotforwater.com/*",
+    "*://*.elliotforwater.com/",
     "https://suggest.finditnowonline.com",
     "storage",
     "tabs"
