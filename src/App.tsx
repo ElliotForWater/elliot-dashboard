@@ -21,7 +21,7 @@ function App() {
   useEffect(() => {
     // rerender component when cookies are updated
     setNumbSearch(user.userState.numOfSearches)
-  }, [])
+  }, [user.userState])
 
   return (
     <UserContext.Provider value={user}>

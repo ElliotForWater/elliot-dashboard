@@ -23,6 +23,7 @@ const mergeCookiesWithUserState = (defaultUserState: UserStateProps): UserStateP
     if (Object.getOwnPropertyDescriptor(cookiesName, key)) {
       const printAddress = async () => {
         const cookieValue = await getCookieValue(cookiesName[key])
+
         if (cookieValue !== undefined) {
           newUserState[key] = cookieValue
         }
@@ -51,15 +52,13 @@ export const useUserStateSyncedWithCookies = (): UserContextProps => {
 
       for (const key in nextState) {
         if (Object.getOwnPropertyDescriptor(cookiesName, key)) {
-          setCookie(cookiesName[key], newState[key], { expires: 365 })
+          setCookie(cookiesName[key], newState[key], { expirationDate: 365 })
         }
       }
 
       return newState
     })
   }, [])
-
-  console.log({ userState: userState.numOfSearches })
 
   return {
     userState,

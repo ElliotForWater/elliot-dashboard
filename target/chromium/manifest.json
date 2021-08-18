@@ -38,19 +38,19 @@
   },
   "permissions": [
     "cookies",
-    "*://*.elliotforwater.com/",
-    "https://suggest.finditnowonline.com",
     "storage",
-    "tabs"
+    "tabs",
+    "*://elliotforwater.com/"
   ],
   "externally_connectable": {
     "matches": [
-      "*://elliotforwater.com/*",
+      "https://elliotforwater.com/*",
       "*://www.elliotforwater.com/*"
     ]
   },
   "host_permissions": [
-    " https://suggest.finditnowonline.com"
+    "*://elliotforwater.com/",
+    "https://suggest.finditnowonline.com"
   ],
   "homepage_url": "https://elliotforwater.com/",
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAm1XF7q7PcXwDjWRsYlQz05KkzDMg3KUmQWgZTAOMxZsOYuRY3OJzumXFjzHO0vSqpgep+rTb+t0tIhGRW2ay8nTXdCTEhs5i3O4Em62gjJ1SGAH3Qjo0OLFBZD2WcVlAOw6kzhU6nYgJm1pEBndnABl4EWDh1hWUC5ohnSRd+YdQXn7hsybIWriV+qgdTQptC1HyyzWihAZJ3Byg07vb2FTRRz05GDgYj+h2Qm96CU9CUogjakrSDGQzEyBSvhIfstl/rGA5VL6suyRjMpyzI7AhJqYpTYKKPaf2fTk+k06fbCvpO5pLnCda1PZav7m0oc/Ugztkb2jQF2sF3tXM+QIDAQAB",

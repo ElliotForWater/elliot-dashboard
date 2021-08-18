@@ -41,14 +41,13 @@ export async function getCookieValue(name: CookieName) {
   if (extensionApiObject) {
     const promiseCookie = new Promise<string | number | boolean | undefined>((resolve, reject) => {
       extensionApiObject.cookies.getAll({}, (cookies) => {
-        const filteredCookies: any = cookies.filter(
-          (cookie) => cookie.domain === 'elliotforwater.com' && cookie.name === name
-        )
+        const filteredCookies = cookies.filter((cookie) => {
+          return cookie.domain === 'elliotforwater.com' && cookie.name === name
+        })
 
-        resolve(convertCookieValue(name, filteredCookies[0].value))
+        resolve(convertCookieValue(name, filteredCookies[0]?.value))
       })
     })
-
     return promiseCookie.then()
   } else {
     const value = Cookies.get(name)
@@ -56,7 +55,14 @@ export async function getCookieValue(name: CookieName) {
   }
 }
 
-export function setCookie(name: CookieName, value: string, opts?: { expires: number }): void {
-  // TODO: set cookies with extensionAPI
-  Cookies.set(name, value, opts)
+export function setCookie(name: CookieName, value: string, opts?: { expirationDate: number }): void {
+  if (extensionApiObject) {
+    extensionApiObject.cookies.set({
+      url: 'https://elliotforwater.com/',
+      name,
+      value: value.toString(),
+    })
+  } else {
+    Cookies.set(name, value, opts)
+  }
 }
