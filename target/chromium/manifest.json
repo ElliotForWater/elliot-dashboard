@@ -39,7 +39,6 @@
   "permissions": [
     "cookies",
     "storage",
-    "tabs",
     "*://elliotforwater.com/"
   ],
   "externally_connectable": {
