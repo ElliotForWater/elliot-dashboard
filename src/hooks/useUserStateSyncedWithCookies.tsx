@@ -5,7 +5,7 @@ import {
   COOKIE_NAME_ADULT_FILTER,
   COOKIE_NAME_NEW_TAB,
   COOKIE_NAME_SEARCH_COUNT,
-  getCookie,
+  getCookieValue,
   setCookie,
 } from '../helpers/_cookies'
 
@@ -21,10 +21,15 @@ const mergeCookiesWithUserState = (defaultUserState: UserStateProps): UserStateP
 
   for (const key in newUserState) {
     if (Object.getOwnPropertyDescriptor(cookiesName, key)) {
-      const cookieValue = getCookie(cookiesName[key])
-      if (cookieValue !== undefined) {
-        newUserState[key] = cookieValue
+      const printAddress = async () => {
+        const cookieValue = await getCookieValue(cookiesName[key])
+
+        if (cookieValue !== undefined) {
+          newUserState[key] = cookieValue
+        }
       }
+
+      printAddress()
     }
   }
 
@@ -33,6 +38,7 @@ const mergeCookiesWithUserState = (defaultUserState: UserStateProps): UserStateP
 
 export const useUserStateSyncedWithCookies = (): UserContextProps => {
   const initialUserState = useMemo(() => mergeCookiesWithUserState(USER_STATE_DEFAULT), [])
+
   const [userState, _setUserState] = useState(initialUserState)
 
   const setUserState = useCallback((nextState: Partial<UserStateProps>): void => {
@@ -46,7 +52,7 @@ export const useUserStateSyncedWithCookies = (): UserContextProps => {
 
       for (const key in nextState) {
         if (Object.getOwnPropertyDescriptor(cookiesName, key)) {
-          setCookie(cookiesName[key], newState[key], { expires: 365 })
+          setCookie(cookiesName[key], newState[key], { expirationDate: 365 })
         }
       }
 

@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie'
+import { extensionApiObject } from '../App'
 
 export const COOKIE_NAME_LANGUAGE = 'efw_language'
 export const COOKIE_NAME_ADULT_FILTER = 'efw_adult_filter'
@@ -15,7 +16,7 @@ type CookieName =
 
 export type CookieMap = { [cookieName: string]: string }
 
-function convertCookieValue(name: CookieName, value?: string): string | number | boolean | undefined {
+function convertCookieValue(name: string, value?: string): string | number | boolean | undefined {
   if (value === undefined) {
     return value
   }
@@ -36,11 +37,32 @@ function convertCookieValue(name: CookieName, value?: string): string | number |
   }
 }
 
-export function getCookie(name: CookieName) {
-  const value = Cookies.get(name)
-  return convertCookieValue(name, value)
+export async function getCookieValue(name: CookieName) {
+  if (extensionApiObject) {
+    const promiseCookie = new Promise<string | number | boolean | undefined>((resolve, reject) => {
+      extensionApiObject.cookies.getAll({}, (cookies) => {
+        const filteredCookies = cookies.filter((cookie) => {
+          return cookie.domain === 'elliotforwater.com' && cookie.name === name
+        })
+
+        resolve(convertCookieValue(name, filteredCookies[0]?.value))
+      })
+    })
+    return promiseCookie.then()
+  } else {
+    const value = Cookies.get(name)
+    return convertCookieValue(name, value)
+  }
 }
 
-export function setCookie(name: CookieName, value: string, opts?: { expires: number }): void {
-  Cookies.set(name, value, opts)
+export function setCookie(name: CookieName, value: string, opts?: { expirationDate: number }): void {
+  if (extensionApiObject) {
+    extensionApiObject.cookies.set({
+      url: 'https://elliotforwater.com/',
+      name,
+      value: value.toString(),
+    })
+  } else {
+    Cookies.set(name, value, opts)
+  }
 }
