@@ -4,7 +4,7 @@ import { UserContext } from '../../context/UserContext'
 import Nav from '../Nav/Nav'
 import Tooltip from '../Tooltip/Tooltip'
 import styles from './Header.module.css'
-import Drop from '../../images/water_droplet.svg'
+import Drop from '../../images/drop_white.svg'
 
 function getLitersOfWater(litersOfWaterPerMillisecond: number) {
   // Set dates from when we started delivering water until today
@@ -59,7 +59,7 @@ const HeaderHome: FC = () => {
             </Tooltip>
           </div>
           <div className={styles.menu}>
-            <Nav />
+            <Nav closeTooltip={() => setHideTooltip(true)} />
           </div>
         </div>
       </div>

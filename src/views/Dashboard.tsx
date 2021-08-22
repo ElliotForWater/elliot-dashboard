@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import SearchBar from '../components/SearchBar/SearchBar'
 import styles from './Dashboard.module.css'
-import Logo from '../images/logo.svg'
+import Logo from '../images/logo_white.svg'
 
 function Dashboard() {
   var [date, setDate] = useState(new Date())
