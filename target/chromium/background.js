@@ -1,3 +1,5 @@
+// import { fetchRandomPhoto } from '../../src/helpers/_unsplashFetch'
+
 function openNewTab() {
   chrome.tabs.create({
     url: 'chrome://newtab',
@@ -14,6 +16,11 @@ chrome.runtime.onInstalled.addListener((details) => {
 // Browser action click event - open tab on extension icon's click
 chrome.action.onClicked.addListener(() => {
   openNewTab()
+})
+
+// Very first startup of a new Google Profile
+chrome.runtime.onStartup.addListener(async (req, sender, sendResponse) => {
+  console.log('on startup')
 })
 
 // Listen to messages

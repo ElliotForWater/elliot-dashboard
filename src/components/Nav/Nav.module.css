@@ -31,17 +31,17 @@
 
 .hamburgerMenu {
   display: block;
-  width: 17px;
+  width: 20px;
   cursor: pointer;
 }
 
 .hamburgerMenu span {
   display: block;
   width: auto;
-  height: 3px;
-  margin-bottom: 3px;
+  height: 2px;
+  margin-bottom: 4px;
   position: relative;
-  background: black;
+  background: white;
   border-radius: 10px;
 }
 

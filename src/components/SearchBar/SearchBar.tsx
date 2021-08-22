@@ -157,7 +157,7 @@ const SearchBar = () => {
               autoComplete='off'
               autoCorrect='off'
               spellCheck='false'
-              placeholder='Search the web to give water...'
+              placeholder='Every search gives water...'
               register={register}
             />
             <button className={styles.button} type='submit'>

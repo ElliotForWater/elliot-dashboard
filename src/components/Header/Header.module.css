@@ -25,6 +25,18 @@
   justify-content: flex-end;
 }
 
+.counterContainer {
+  display: flex;
+  align-items: center;
+  margin-right: 40px;
+}
+
+.counterText {
+  color: white;
+  font-size: 16px;
+  margin-left: 8px;
+}
+
 .dropletContainer {
   display: inline-flex;
   align-items: center;
@@ -40,15 +52,23 @@
 
 .dropletCount {
   margin-top: 2px;
+  padding-right: 10px;
+  font-size: 1.6em;
+  color: white;
 }
 
 .menu {
   margin-left: 1.2em;
-  margin-top: 6px;
+  display: flex;
+  align-items: center;
 }
 
 @media (min-width: 768px) {
   .header {
     margin-bottom: 0;
+  }
+
+  .counterText {
+    font-size: 20px;
   }
 }
