@@ -34,9 +34,21 @@
 }
 
 .searchWrap {
-  max-width: 90%;
+  max-width: 100%;
   margin: 33px auto;
   font-size: 1.2em;
+}
+
+.timeContainer {
+  font-size: 6em;
+  color: white;
+  text-align: center;
+}
+
+.greetings {
+  font-size: 0.6em;
+  font-weight: normal;
+  line-height: 0.6;
 }
 
 @media (min-width: 450px) {
@@ -55,6 +67,6 @@
   }
 
   .searchWrap {
-    max-width: 42em;
+    max-width: 52em;
   }
 }

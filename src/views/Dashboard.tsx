@@ -1,9 +1,21 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import SearchBar from '../components/SearchBar/SearchBar'
 import styles from './Dashboard.module.css'
 import Logo from '../images/logo.svg'
 
 function Dashboard() {
+  var [date, setDate] = useState(new Date())
+
+  useEffect(() => {
+    const timer = setInterval(() => setDate(new Date()), 1000)
+
+    return function cleanup() {
+      clearInterval(timer)
+    }
+  })
+
+  const timeFormat = Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric', hour12: false }).format(date)
+
   return (
     <div className={styles.dashboardContainer}>
       <section className={styles.searchBarSection}>
@@ -14,6 +26,10 @@ function Dashboard() {
         </div>
         <div className={styles.searchWrap}>
           <SearchBar />
+        </div>
+        <div className={styles.timeContainer}>
+          <time dateTime={JSON.stringify(date.toLocaleTimeString)}>{timeFormat}</time>
+          <p className={styles.greetings}>Enjoy your day!</p>
         </div>
       </section>
     </div>
