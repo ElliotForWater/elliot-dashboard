@@ -17,11 +17,18 @@
 .button {
   position: absolute;
   right: 35px;
-  bottom: 22%;
-  background: #fff;
+  bottom: 27%;
   border: 0;
   margin-bottom: 0;
   padding: 0;
+  width: 20px;
+  height: 20px;
+  background: transparent;
+}
+
+.searchIcon {
+  width: inherit;
+  height: inherit;
 }
 
 .autosuggestResults {

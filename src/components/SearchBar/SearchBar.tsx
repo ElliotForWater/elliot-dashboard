@@ -7,7 +7,7 @@ import { Input } from '../Forms/Inputs/Inputs'
 import { UserContext } from '../../context/UserContext'
 import classnames from 'classnames'
 import styles from './SearchBar.module.css'
-import SearchIcon from '../Icons/SearchIcon'
+import SearchIcon from '../../images/search_icon.png'
 import { queryNoWitheSpace } from '../../helpers/_utils'
 import { extensionApiObject } from '../../App'
 
@@ -161,7 +161,7 @@ const SearchBar = () => {
               register={register}
             />
             <button className={styles.button} type='submit'>
-              <SearchIcon color='var(--elliotPrimary)' size={16} />
+              <img className={styles.searchIcon} src={SearchIcon} />
             </button>
           </form>
         </div>
