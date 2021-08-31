@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 const CHROME_ID = 'ddfnnfelkcabbeebchaegpcdcmdekoim'
-=======
-// import { fetchRandomPhoto } from '../../src/helpers/_unsplashFetch'
->>>>>>> new header design, 1 photo per day change everyday
 
 function openNewTab() {
   chrome.tabs.create({

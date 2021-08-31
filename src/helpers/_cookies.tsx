@@ -48,6 +48,7 @@ export async function getCookieValue(name: CookieName) {
         resolve(convertCookieValue(name, filteredCookies[0]?.value))
       })
     })
+
     return promiseCookie.then()
   } else {
     const value = Cookies.get(name)

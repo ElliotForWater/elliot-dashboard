@@ -23,6 +23,8 @@ const HeaderHome: FC = () => {
   const [odometerValue, setOdometerValue] = useState<number>(0)
   const iconDropEl = useRef<HTMLImageElement>(null)
 
+  console.log('header search numb', userState.numOfSearches)
+
   useEffect(() => {
     const litersOfWaterPerMillisecond: number = 20000
     setOdometerValue(getLitersOfWater(litersOfWaterPerMillisecond))
@@ -41,7 +43,7 @@ const HeaderHome: FC = () => {
           <div className={styles.counterContainer}>
             {Odometer !== null && (
               <Odometer
-                // @ts-ignore
+                // @ts-ignore6px
                 value={odometerValue}
                 format='(,ddd)'
                 duration={1000}

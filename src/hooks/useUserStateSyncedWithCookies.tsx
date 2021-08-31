@@ -62,6 +62,7 @@ export const useUserStateSyncedWithCookies = (): UserContextProps => {
       return newState
     })
   }, [])
+  console.log({ userState })
 
   return {
     userState,
