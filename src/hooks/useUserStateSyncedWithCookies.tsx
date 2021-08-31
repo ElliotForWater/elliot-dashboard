@@ -52,13 +52,14 @@ export const useUserStateSyncedWithCookies = (): UserContextProps => {
 
       for (const key in nextState) {
         if (Object.getOwnPropertyDescriptor(cookiesName, key)) {
-          setCookie(cookiesName[key], newState[key], { expirationDate: 365 })
+          setCookie(cookiesName[key], newState[key], { expires: 365 })
         }
       }
 
       return newState
     })
   }, [])
+  console.log({ userState })
 
   return {
     userState,

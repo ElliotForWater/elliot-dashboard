@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { UserContext } from './context/UserContext'
 import { useUserStateSyncedWithCookies } from './hooks/useUserStateSyncedWithCookies'
 import Header from './components/Header/Header'
@@ -16,12 +16,6 @@ declare global {
 }
 function App() {
   const user = useUserStateSyncedWithCookies()
-  const [, setNumbSearch] = useState(user.userState.numOfSearches)
-
-  useEffect(() => {
-    // rerender component when cookies are updated
-    setNumbSearch(user.userState.numOfSearches)
-  }, [user.userState])
 
   return (
     <UserContext.Provider value={user}>

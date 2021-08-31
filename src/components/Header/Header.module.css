@@ -51,10 +51,11 @@
 }
 
 .dropletCount {
-  margin-top: -3px;
+  margin-top: -2px;
   padding-right: 6px;
-  font-size: 1.6em;
+  font-size: 1.8em;
   color: white;
+  font-family: var(--fontBlack);
 }
 
 .menu {

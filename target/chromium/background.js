@@ -1,5 +1,3 @@
-// import { fetchRandomPhoto } from '../../src/helpers/_unsplashFetch'
-
 function openNewTab() {
   chrome.tabs.create({
     url: 'chrome://newtab',
