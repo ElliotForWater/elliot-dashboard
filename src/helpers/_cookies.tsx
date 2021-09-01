@@ -39,17 +39,12 @@ function convertCookieValue(name: string, value?: string): string | number | boo
 
 export async function getCookieValue(name: CookieName) {
   if (extensionApiObject) {
-    const promiseCookie = new Promise<string | number | boolean | undefined>((resolve, reject) => {
-      extensionApiObject.cookies.getAll({}, (cookies) => {
-        const filteredCookies = cookies.filter((cookie) => {
-          return cookie.domain === 'elliotforwater.com' && cookie.name === name
-        })
-
-        resolve(convertCookieValue(name, filteredCookies[0]?.value))
-      })
+    const cookies = await extensionApiObject.cookies.getAll({})
+    const filteredCookies = cookies.filter((cookie) => {
+      return cookie.domain === 'elliotforwater.com' && cookie.name === name
     })
 
-    return promiseCookie.then()
+    return convertCookieValue(name, filteredCookies[0]?.value)
   } else {
     const value = Cookies.get(name)
     return convertCookieValue(name, value)
