@@ -4,7 +4,7 @@ import { UserContext } from '../../context/UserContext'
 import Nav from '../Nav/Nav'
 import Tooltip from '../Tooltip/Tooltip'
 import styles from './Header.module.css'
-import Drop from '../../images/drop_white.svg'
+import WhiteDrop from '../../images/water_drop_new.png'
 
 function getLitersOfWater(litersOfWaterPerMillisecond: number) {
   // Set dates from when we started delivering water until today
@@ -21,8 +21,6 @@ const HeaderHome: FC = () => {
   const [hideTooltip, setHideTooltip] = useState(true)
   const { userState } = useContext(UserContext)
   const [odometerValue, setOdometerValue] = useState<number>(0)
-
-  console.log('header search numb', userState.numOfSearches)
 
   useEffect(() => {
     const litersOfWaterPerMillisecond: number = 20000
@@ -54,7 +52,7 @@ const HeaderHome: FC = () => {
 
           <div className={styles.dropletContainer} onClick={() => setHideTooltip((prev) => !prev)}>
             <p className={styles.dropletCount}>{userState.numOfSearches}</p>
-            <img className={styles.dropletImg} src={Drop} />
+            <img className={styles.dropletImg} src={WhiteDrop} />
             <Tooltip isHidden={hideTooltip} direction='right'>
               This is the number of searches you have done with Elliot for Water. Approximately, every search donates 14
               liters of pure drinking water.

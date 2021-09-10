@@ -4,7 +4,7 @@ import { fetchRandomPhoto } from '../../helpers/_unsplashFetch'
 import styles from './Background.module.css'
 
 interface imageProps {
-  urls: { regular: string }
+  urls: { regular: string; full: string }
   alt_description: string
   location: { title: string }
   links: { html: string }
@@ -25,7 +25,7 @@ const Background: FC = function ({ children }) {
 
   return (
     <div className={styles.container}>
-      {photo && <img className={styles.img} src={photo.urls.regular} alt={photo.alt_description} />}
+      {photo && <img className={styles.img} src={photo.urls.full} alt={photo.alt_description} />}
       {children}
 
       {photo && (

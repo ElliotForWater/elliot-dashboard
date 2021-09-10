@@ -29,7 +29,7 @@ function Dashboard() {
         </div>
         <div className={styles.timeContainer}>
           <time dateTime={JSON.stringify(date.toLocaleTimeString)}>{timeFormat}</time>
-          <p className={styles.greetings}>Enjoy your day!</p>
+          <p className={styles.greetings}>Join our community of changemakers!</p>
         </div>
       </section>
     </div>
