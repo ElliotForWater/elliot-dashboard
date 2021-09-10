@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, useContext } from 'react'
+import React, { FC, useRef, useState, useEffect, useContext } from 'react'
 import Odometer from 'react-odometerjs'
 import { UserContext } from '../../context/UserContext'
 import Nav from '../Nav/Nav'
@@ -21,6 +21,7 @@ const HeaderHome: FC = () => {
   const [hideTooltip, setHideTooltip] = useState(true)
   const { userState } = useContext(UserContext)
   const [odometerValue, setOdometerValue] = useState<number>(0)
+  const iconDropEl = useRef<HTMLImageElement>(null)
 
   useEffect(() => {
     const litersOfWaterPerMillisecond: number = 20000
@@ -50,10 +51,10 @@ const HeaderHome: FC = () => {
             <p className={styles.counterText}>L of water donated</p>
           </div>
 
-          <div className={styles.dropletContainer} onClick={() => setHideTooltip((prev) => !prev)}>
+          <div className={styles.dropletContainer} onClick={() => setHideTooltip(false)}>
             <p className={styles.dropletCount}>{userState.numOfSearches}</p>
-            <img className={styles.dropletImg} src={WhiteDrop} />
-            <Tooltip isHidden={hideTooltip} direction='right'>
+            <img className={styles.dropletImg} src={WhiteDrop} ref={iconDropEl} />
+            <Tooltip isHidden={hideTooltip} direction='right' iconDropEl={iconDropEl} setHideTooltip={setHideTooltip}>
               This is the number of searches you have done with Elliot for Water. Approximately, every search donates 14
               liters of pure drinking water.
             </Tooltip>
