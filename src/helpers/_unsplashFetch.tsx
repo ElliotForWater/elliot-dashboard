@@ -102,7 +102,7 @@ const FALLBACK_PHOTO = {
 
 export const fetchRandomPhoto = async function () {
   const url = `${process.env.UNSPLASH_API_URL}/photos/random/`
-  const params = new URLSearchParams(`collections=${process.env.UNSPLASH_COLLECTION_ID}&auto=format`)
+  const params = new URLSearchParams(`collections=${process.env.UNSPLASH_COLLECTION_ID}`)
   const headers = new Headers({
     Authorization: `Client-ID ${process.env.UNSPLASH_API_KEY}`,
   })
