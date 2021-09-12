@@ -8,22 +8,22 @@ import Dashboard from './views/Dashboard'
 import './odometer.css'
 
 export const extensionApiObject = window.chrome || window.browser
-
 declare global {
   interface Window {
     browser: any
   }
 }
+
 function App() {
   const user = useUserStateSyncedWithCookies()
 
   return (
     <UserContext.Provider value={user}>
       <Background>
-        <div>
+        <>
           <Header />
           <Dashboard />
-        </div>
+        </>
 
         <Modal.Host />
       </Background>

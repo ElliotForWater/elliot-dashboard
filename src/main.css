@@ -134,7 +134,7 @@ html {
 }
 
 body {
-  background: white;
+  background: #505a602b;
   color: var(--textColor);
   font-weight: 400;
   min-height: 100%;
