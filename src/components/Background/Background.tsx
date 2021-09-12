@@ -24,7 +24,7 @@ const Background = function ({ children }) {
 
     const showContent = setTimeout(() => {
       setContent(children)
-    }, 300)
+    }, 100)
 
     return () => clearTimeout(showContent)
   }, [])
