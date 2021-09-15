@@ -13,6 +13,7 @@ function Dashboard() {
   function handleMessage(msg) {
     console.log('handle messag func', msg)
     if (msg.target === 'onInstallAndUpdate') {
+      console.log('extension on InstallUpdate')
       setShowWelcomeMessage(true)
     }
   }

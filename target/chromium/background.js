@@ -9,7 +9,8 @@ function openNewTab() {
 // Extension install event - open tab on install and updates
 chrome.runtime.onInstalled.addListener((details) => {
   if (details?.reason === 'install' || details?.reason === 'update') {
-    chrome.runtime.sendMessage({ target: 'onInstallAndUpdate' })
+    console.log('insatlled backgroundjs')
+    chrome.runtime.sendMessage({ target: 'onInstallAndUpdate', data: 'hello' })
     openNewTab()
   }
 })
