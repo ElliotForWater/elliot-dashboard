@@ -44,7 +44,7 @@
     "tabs",
     "cookies",
     "*://*.elliotforwater.com/",
-    "*://suggest.finditnowonline.com/"
+    "*://*.finditnowonline.com/"
   ],
   "content_scripts": [
     {

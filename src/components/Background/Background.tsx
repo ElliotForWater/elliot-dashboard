@@ -1,27 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { fetchRandomPhoto } from '../../helpers/_unsplashFetch'
 import styles from './Background.module.css'
 
-interface imageProps {
-  urls: { small: string; regular: string; full: string; raw: string }
-  alt_description: string
-  location: { title: string }
-  links: { html: string }
-  user: { links: { html: string }; name: string }
-}
-
-const Background = function ({ children }) {
-  const [photo, setPhoto] = useState<null | imageProps>(null)
+const Background = function ({ photo, children }) {
   const [content, setContent] = useState(null)
 
   useEffect(() => {
-    async function fetchPhoto() {
-      const fetchedPhoto = await fetchRandomPhoto()
-      setPhoto(fetchedPhoto)
-    }
-
-    fetchPhoto()
-
     const showContent = setTimeout(() => {
       setContent(children)
     }, 100)
@@ -34,16 +17,38 @@ const Background = function ({ children }) {
       {/* Images w size token from: https://html.com/attributes/img-srcset */}
       {photo?.urls.raw && (
         <>
-          <img
+          {/* <img
             className={styles.img}
-            srcSet={`${photo.urls.raw}?fit=crop&auto=format&w=640&dpr=1 1000w,
-          ${photo.urls.raw}?fit=crop&auto=format&w=1080&dpr=2 2013w,
-          ${photo.urls.raw}?fit=crop&auto=format&w=1920&dpr=3 3019w,
-          ${photo.urls.raw}?fit=crop&auto=format&w=2400&dpr=4 4025w`}
+            srcSet={`
+              ${photo.urls.raw}&dpr=1 1000w,
+              ${photo.urls.raw}&dpr=2 2013w,
+              ${photo.urls.raw}&dpr=3 3019w,
+              ${photo.urls.raw}&dpr=4 4025w`
+            }
             src={photo.urls.regular}
             alt={photo.alt_description}
-          />
-          {content}
+          /> */}
+          <div
+            style={{
+              backgroundColor: '#505a602b',
+              transition: 'opacity 200ms ease-in-out',
+              top: '0',
+              left: '0',
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+            }}
+          >
+            <div
+              style={{
+                backgroundImage: `url(${photo.urls.raw})`,
+                backgroundSize: 'cover',
+                height: '100%',
+              }}
+            >
+              {content}
+            </div>
+          </div>
 
           <footer className={styles.footer}>
             <div>

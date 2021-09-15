@@ -12,7 +12,7 @@ import SearchIconComp from '../Icons/SearchIcon'
 import { queryNoWitheSpace } from '../../helpers/_utils'
 import { extensionApiObject } from '../../App'
 
-const SearchBar = () => {
+const SearchBar = ({ defaultSearchEngine }) => {
   const { userState, setUserState } = useContext(UserContext)
   const [searchValue, setSearchValue] = useState<string>('')
   const [highlightIndex, setHighlightIndex] = useState<number>(-1)

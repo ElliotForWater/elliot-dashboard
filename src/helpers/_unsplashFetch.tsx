@@ -97,15 +97,36 @@ const FALLBACK_PHOTO = {
   views: 1456189,
   downloads: 19705,
 }
-
 /* eslint-enable camelcase */
+
+/**
+ * Calculate width to fetch image, tuned for Unsplash cache performance.
+ */
+export function calculateWidth(screenWidth: number = 900): number {
+  // Consider a minimum resolution too
+  screenWidth = Math.max(screenWidth, 900) // Lower limit at 900
+  // screenWidth = Math.max(screenWidth, 1920); // Lower limit at 1920
+  screenWidth = Math.min(screenWidth, 3840) // Upper limit at 4K
+  screenWidth = Math.ceil(screenWidth / 240) * 240 // Snap up to nearest 240px for improved caching
+  return screenWidth
+}
 
 export const fetchRandomPhoto = async function () {
   const url = `${process.env.UNSPLASH_API_URL}/photos/random/`
-  const params = new URLSearchParams(`collections=${process.env.UNSPLASH_COLLECTION_ID}`)
+  const width = calculateWidth(window.innerWidth)
+
+  const params = new URLSearchParams({
+    collections: `${process.env.UNSPLASH_COLLECTION_ID}`,
+    q: '85', // range [0-100]
+    w: `${width}`,
+    fit: 'crop',
+    auto: 'format',
+  })
+
   const headers = new Headers({
     Authorization: `Client-ID ${process.env.UNSPLASH_API_KEY}`,
   })
+
   const today = new Date().toLocaleDateString()
   let dailyPhoto = localStorage.getItem('dailyPhoto')
   const savedPhotoDate = localStorage.getItem('savedPhotoDate')
