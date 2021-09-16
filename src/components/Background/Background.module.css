@@ -10,7 +10,7 @@
   width: 100%;
   position: absolute;
   height: 100%;
-  z-index: -1;
+  z-index: 1;
 }
 
 .img {
@@ -31,11 +31,13 @@
   padding: 10px 20px;
 }
 
-.footer a {
+.linksContainer a {
   color: white;
+  cursor: pointer;
 }
 
-.footer a:hover {
+.linksContainer a:hover {
   color: white;
+  cursor: pointer;
   text-decoration: underline;
 }

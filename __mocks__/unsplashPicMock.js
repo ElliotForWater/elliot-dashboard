@@ -1,9 +1,3 @@
-import rawFallbackPic from '../images/fallback_unsplash/unsplash_fallback_raw.jpg'
-import fullFallbackPic from '../images/fallback_unsplash/unsplash_fallback_full.jpg'
-import regularFallbackPic from '../images/fallback_unsplash/unsplash_fallback_regular.jpg'
-import smallFallbackPic from '../images/fallback_unsplash/unsplash_fallback_small.jpg'
-
-/* eslint-disable camelcase */
 const FALLBACK_PHOTO = {
   id: 'xWOTojs1eg4',
   created_at: '2018-08-01T20:00:38-04:00',
@@ -96,61 +90,4 @@ const FALLBACK_PHOTO = {
   },
   views: 1456189,
   downloads: 19705,
-}
-/* eslint-enable camelcase */
-
-/**
- * Calculate width to fetch image, tuned for Unsplash cache performance.
- */
-export function calculateWidth(screenWidth: number = 900): number {
-  // Consider a minimum resolution too
-  screenWidth = Math.max(screenWidth, 900) // Lower limit at 900
-  // screenWidth = Math.max(screenWidth, 1920); // Lower limit at 1920
-  screenWidth = Math.min(screenWidth, 3840) // Upper limit at 4K
-  screenWidth = Math.ceil(screenWidth / 240) * 240 // Snap up to nearest 240px for improved caching
-  return screenWidth
-}
-
-export const fetchRandomPhoto = async function () {
-  const url = `${process.env.UNSPLASH_API_URL}/photos/random/`
-  const width = calculateWidth(window.innerWidth)
-
-  const params = new URLSearchParams({
-    collections: `${process.env.UNSPLASH_COLLECTION_ID}`,
-    q: '85', // range [0-100]
-    w: `${width}`,
-    fit: 'crop',
-    auto: 'format',
-  })
-
-  const headers = new Headers({
-    Authorization: `Client-ID ${process.env.UNSPLASH_API_KEY}`,
-  })
-
-  const today = new Date().toLocaleDateString()
-  let dailyPhoto = localStorage.getItem('dailyPhoto')
-  const savedPhotoDate = localStorage.getItem('savedPhotoDate')
-  const isNewDay = savedPhotoDate !== JSON.stringify(today)
-
-  if (!dailyPhoto || isNewDay) {
-    try {
-      const res = await fetch(`${url}?${params}`, { headers })
-
-      if (res.ok) {
-        dailyPhoto = await res.json()
-        localStorage.setItem('dailyPhoto', JSON.stringify(dailyPhoto))
-        localStorage.setItem('savedPhotoDate', JSON.stringify(today))
-
-        return dailyPhoto
-      } else {
-        console.log('Error fetching unsplash photo')
-        return FALLBACK_PHOTO
-      }
-    } catch (err) {
-      console.log('Error fetching unsplash server', err)
-      return FALLBACK_PHOTO
-    }
-  } else {
-    return JSON.parse(dailyPhoto)
-  }
 }

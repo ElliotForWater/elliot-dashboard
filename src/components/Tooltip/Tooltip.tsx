@@ -18,7 +18,6 @@ const Tooltip = ({ isHidden, children, direction, iconDropEl, setHideTooltip }: 
       const isOutsideTooltip = tooltipEl.current && !tooltipEl.current.contains(event.target)
       const isOutsideDropIcon = iconDropEl.current && !iconDropEl.current.contains(event.target)
       if (isOutsideDropIcon && isOutsideTooltip) {
-        console.log('outside')
         setHideTooltip(true)
       }
     }

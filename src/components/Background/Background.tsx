@@ -15,26 +15,25 @@ const Background = function ({ photo, children }) {
   return (
     <div className={styles.container}>
       {/* Images w size token from: https://html.com/attributes/img-srcset */}
-      {photo?.urls.raw && (
+      {photo?.src && (
         <div className={styles.imageContainer}>
           <img
             className={styles.img}
             srcSet={`
-              ${photo.urls.regular}&dpr=1 1000w,
-              ${photo.urls.regular}&dpr=2 2013w,
-              ${photo.urls.regular}&dpr=3 3019w,
-              ${photo.urls.regular}&dpr=4 4025w`}
-            src={photo.urls.regular}
+              ${photo.src.medium}&dpr=1 400w,
+              ${photo.src.large}&dpr=2 2013w,
+              ${photo.src.large2x}&dpr=3 3019w,
+              ${photo.src.landscape}&dpr=4 4025w`}
+            src={photo.src.medium}
           />
 
           {content}
 
           <footer className={styles.footer}>
-            <div>
-              <a href={photo.links.html}>Photo</a> /<a href={photo.user.links.html}> {photo.user.name}</a> /
-              <a href='https://unsplash.com'> Unsplash</a>
+            <div className={styles.linksContainer}>
+              <a href={photo.photographer_url}>{photo.photographer}</a> - <a href={photo.url}>Photo</a> on{' '}
+              <a href='https://www.pexels.com'>Pexel</a>
             </div>
-            <div>{photo.location.title}</div>
           </footer>
         </div>
       )}

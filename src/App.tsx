@@ -6,7 +6,7 @@ import Modal from './components/Modal/Modal'
 import Background from './components/Background/Background'
 import Dashboard from './views/Dashboard'
 import './odometer.css'
-import { fetchRandomPhoto } from './helpers/_unsplashFetch'
+import { fetchRandomPhoto } from './helpers/_photoFetch'
 
 export const extensionApiObject = window.chrome || window.browser
 declare global {
@@ -32,7 +32,7 @@ function App() {
     async function fetchPhoto() {
       const fetchedPhoto = await fetchRandomPhoto()
       setPhoto(fetchedPhoto)
-      console.log('photo back', fetchedPhoto)
+      // console.log('photo back', fetchedPhoto)
     }
 
     fetchPhoto()
