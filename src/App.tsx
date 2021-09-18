@@ -32,7 +32,6 @@ function App() {
     async function fetchPhoto() {
       const fetchedPhoto = await fetchRandomPhoto()
       setPhoto(fetchedPhoto)
-      // console.log('photo back', fetchedPhoto)
     }
 
     fetchPhoto()

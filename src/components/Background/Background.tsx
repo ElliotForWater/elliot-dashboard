@@ -20,10 +20,11 @@ const Background = function ({ photo, children }) {
           <img
             className={styles.img}
             srcSet={`
-              ${photo.src.medium}&dpr=1 400w,
-              ${photo.src.large}&dpr=2 2013w,
-              ${photo.src.large2x}&dpr=3 3019w,
-              ${photo.src.landscape}&dpr=4 4025w`}
+              ${photo.src.medium} 480w,
+              ${photo.src.large} 1x,
+              ${photo.src.large2x} 2x,
+              ${photo.src.landscape} 3x,
+            `}
             src={photo.src.medium}
           />
 
