@@ -48,8 +48,7 @@
   "content_scripts": [
     {
       "matches": [
-        "*://localhost:3000/*",
-        "*://elliotforwater.com/*"
+        "*://*.elliotforwater.com/*"
       ],
       "all_frames": true,
       "js": [

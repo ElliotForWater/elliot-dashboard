@@ -1,3 +1,5 @@
+const CHROME_ID = 'ddfnnfelkcabbeebchaegpcdcmdekoim';
+
 function openNewTab() {
   chrome.tabs.create({
     url: 'chrome://newtab',
@@ -18,9 +20,9 @@ chrome.action.onClicked.addListener(() => {
 
 // Listen to messages
 chrome.runtime.onMessage.addListener(async (req, sender, sendResponse) => {
-  const id = chrome.runtime.id
-  if (req.action === 'id' && req.value === id) {
-    sendResponse({ id: id })
+  if (req.action === 'id' && req.value === CHROME_ID) {
+    console.log('recieve msg from webapp')
+    sendResponse({ message: 'extension_installed' })
   }
 
   // Fetch search suggestion API

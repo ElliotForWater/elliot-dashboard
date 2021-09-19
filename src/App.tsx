@@ -12,6 +12,7 @@ export const extensionApiObject = window.chrome || window.browser
 declare global {
   interface Window {
     browser: any
+    wrappedJSObject: any
   }
 }
 function App() {
