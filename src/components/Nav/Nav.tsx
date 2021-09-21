@@ -6,7 +6,7 @@ import TextButton from '../Buttons/TextButton/TextButton'
 import { UserContext } from '../../context/UserContext'
 import Modal from '../Modal/Modal'
 
-const Nav = () => {
+const Nav = ({ closeTooltip }) => {
   const iconMenuEl = useRef<HTMLDivElement>(null)
   const menuEl = useRef<HTMLUListElement>(null)
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false)
@@ -42,7 +42,14 @@ const Nav = () => {
   return (
     <>
       <nav className={styles.nav}>
-        <div className={styles.hamburgerMenu} onClick={() => setIsNavOpen((wasOpen) => !wasOpen)} ref={iconMenuEl}>
+        <div
+          className={styles.hamburgerMenu}
+          onClick={() => {
+            closeTooltip()
+            setIsNavOpen((wasOpen) => !wasOpen)
+          }}
+          ref={iconMenuEl}
+        >
           <span />
           <span />
           <span />

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "ElliotForWater",
-  "version": "3.0",
+  "version": "3.1",
   "short_name": "ElliotForWater",
   "description": "This extension sets Elliot for Water as your default search engine so that, you can help donate clean water every time you search.",
   "icons": {
@@ -39,17 +39,17 @@
   "permissions": [
     "cookies",
     "storage",
-    "*://elliotforwater.com/"
+    "*://*.elliotforwater.com/"
   ],
   "externally_connectable": {
     "matches": [
-      "https://elliotforwater.com/*",
+      "https://*.elliotforwater.com/*",
       "*://www.elliotforwater.com/*"
     ]
   },
   "host_permissions": [
     "*://elliotforwater.com/",
-    "https://suggest.finditnowonline.com"
+    "*://suggest.finditnowonline.com"
   ],
   "homepage_url": "https://elliotforwater.com/",
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAm1XF7q7PcXwDjWRsYlQz05KkzDMg3KUmQWgZTAOMxZsOYuRY3OJzumXFjzHO0vSqpgep+rTb+t0tIhGRW2ay8nTXdCTEhs5i3O4Em62gjJ1SGAH3Qjo0OLFBZD2WcVlAOw6kzhU6nYgJm1pEBndnABl4EWDh1hWUC5ohnSRd+YdQXn7hsybIWriV+qgdTQptC1HyyzWihAZJ3Byg07vb2FTRRz05GDgYj+h2Qm96CU9CUogjakrSDGQzEyBSvhIfstl/rGA5VL6suyRjMpyzI7AhJqYpTYKKPaf2fTk+k06fbCvpO5pLnCda1PZav7m0oc/Ugztkb2jQF2sF3tXM+QIDAQAB",

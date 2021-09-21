@@ -23,6 +23,7 @@
           "global"
         ]
       }
-    ]
+    ],
+    "declaration-colon-newline-after": null
   }
 }

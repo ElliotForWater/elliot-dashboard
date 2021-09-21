@@ -1,3 +1,5 @@
+const CHROME_ID = 'ddfnnfelkcabbeebchaegpcdcmdekoim'
+
 function openNewTab() {
   chrome.tabs.create({
     url: 'chrome://newtab',
@@ -16,13 +18,25 @@ chrome.action.onClicked.addListener(() => {
   openNewTab()
 })
 
+// Very first startup of a new Google Profile
+chrome.runtime.onStartup.addListener(async (req, sender, sendResponse) => {
+  console.log('on startup')
+})
+
+// Listening to message from web app
+chrome.runtime.onMessageExternal.addListener(
+  function(request, sender, sendResponse) {
+      if (request.message === CHROME_ID) {
+        sendResponse({ message: 'extension_installed' });
+      }
+  });
+
 // Listen to messages
 chrome.runtime.onMessage.addListener(async (req, sender, sendResponse) => {
-  const id = chrome.runtime.id
-  if (req.action === 'id' && req.value === id) {
-    sendResponse({ id: id })
+  console.log({request: req})
+  if (req.message === CHROME_ID) {
+    sendResponse({ message: 'extension_installed' });
   }
-
   // Fetch search suggestion API
   if (req.contentScriptQuery === 'searchValue') {
     const url = `https://suggest.finditnowonline.com/SuggestionFeed/Suggestion?format=jsonp&gd=SY1002042&q=${req.value}`

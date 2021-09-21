@@ -7,33 +7,39 @@
   outline: none;
   width: 100%;
   padding: 15px 60px 15px 1em;
-  height: 3.2em;
+  height: 3.4em;
   border-radius: 2em;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.06);
-  border: 1px solid var(--lighterGrey);
-  font-size: 16px;
+  border: 0 none transparent;
+  font-size: 18px;
+  font-family: var(--fontCommon);
 }
 
 .button {
   position: absolute;
-  right: 25px;
-  bottom: 20%;
-  background: #fff;
+  right: 35px;
+  bottom: 27%;
   border: 0;
   margin-bottom: 0;
   padding: 0;
+  width: 20px;
+  height: 20px;
+  background: transparent;
+}
+
+.searchIcon {
+  width: inherit;
+  height: inherit;
 }
 
 .autosuggestResults {
   position: absolute;
-  width: calc(100% - 10%);
-  max-width: 39em;
+  width: calc(100% - 5%);
   z-index: var(--zindex100);
   background-color: #fff;
   list-style-type: none;
-  margin-top: 0;
-  margin-bottom: 10px;
-  margin-left: 20px;
+  margin-top: -1px;
+  left: 22px;
   border-left: 1px solid var(--lighterGrey);
   border-right: 1px solid var(--lighterGrey);
   border-bottom: 1px solid var(--lighterGrey);

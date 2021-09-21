@@ -7,7 +7,8 @@ import { Input } from '../Forms/Inputs/Inputs'
 import { UserContext } from '../../context/UserContext'
 import classnames from 'classnames'
 import styles from './SearchBar.module.css'
-import SearchIcon from '../Icons/SearchIcon'
+import SearchIcon from '../../images/search_icon.svg'
+import SearchIconComp from '../Icons/SearchIcon'
 import { queryNoWitheSpace } from '../../helpers/_utils'
 import { extensionApiObject } from '../../App'
 
@@ -17,6 +18,7 @@ const SearchBar = () => {
   const [highlightIndex, setHighlightIndex] = useState<number>(-1)
   const [isSuggestionOpen, setIsSuggestionOpen] = useState<boolean>(false)
   const [suggestedWords, setSuggestedWords] = useState<Array<string>>([])
+  const [searchSuggestedWords, setSearchSuggestedWords] = useState(true)
   const inputEl = useRef(null)
 
   const methods = useForm({
@@ -51,7 +53,7 @@ const SearchBar = () => {
       switch (key) {
         case 'ArrowUp':
           event.preventDefault()
-          setIsSuggestionOpen(false)
+          setSearchSuggestedWords(false)
           return setHighlightIndex((prevIndex: number) => {
             if (prevIndex === 0) {
               return prevIndex
@@ -61,7 +63,7 @@ const SearchBar = () => {
           })
 
         case 'ArrowDown':
-          setIsSuggestionOpen(false)
+          setSearchSuggestedWords(false)
           return setHighlightIndex((prevIndex: number) => {
             if (prevIndex === -1) {
               return 0
@@ -75,7 +77,7 @@ const SearchBar = () => {
           })
 
         case 'Escape':
-          setIsSuggestionOpen(false)
+          setSearchSuggestedWords(false)
           break
 
         default:
@@ -92,7 +94,7 @@ const SearchBar = () => {
       })
       extensionApiObject.runtime.onMessage.addListener(handleMessage)
     } else {
-      if (suggestedWords) {
+      if (searchSuggestedWords) {
         fetchSuggestedWords()
       }
     }
@@ -138,6 +140,8 @@ const SearchBar = () => {
 
     if (value.trim()) {
       setIsSuggestionOpen(true)
+    } else {
+      setIsSuggestionOpen(false)
     }
   }
 
@@ -157,11 +161,11 @@ const SearchBar = () => {
               autoComplete='off'
               autoCorrect='off'
               spellCheck='false'
-              placeholder='Search the web to give water...'
+              placeholder='Every search gives water...'
               register={register}
             />
             <button className={styles.button} type='submit'>
-              <SearchIcon color='var(--elliotPrimary)' size={16} />
+              <img className={styles.searchIcon} src={SearchIcon} />
             </button>
           </form>
         </div>
@@ -186,7 +190,7 @@ const SearchBar = () => {
               }}
             >
               <span className={styles.autosuggestItemIcon}>
-                <SearchIcon color='var(--dimGrey)' size={14} />
+                <SearchIconComp color='var(--dimGrey)' size={14} />
               </span>
               {word}
             </li>

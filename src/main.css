@@ -11,9 +11,10 @@
   --lightAzureBackground: #f7f7ff;
   --lightGrey: #e8e8e8;
   --textColor: #333;
+  --textLighterColor: #666;
   --error: #ad081b;
-  --fontCommon: 'Arial', 'Arial Bold', 'Gadget', sans-serif;
-  --fontBlack: 'Arial Black', 'Arial Bold', 'Gadget', sans-serif;
+  --fontCommon: 'open_sansregular', sans-serif;
+  --fontBlack: 'open_sansbold', sans-serif;
   --zindex0: 0;
   --zindex10: 10;
   --zindex50: 50;
@@ -21,6 +22,97 @@
   --zindex200: 200;
   --zindex300: 300;
 }
+
+/* FONTS */
+@font-face {
+  font-family: 'open_sansbold';
+  src: url('./fonts/open-sans/opensans-bold-webfont.woff2') format('woff2'),
+    url('./fonts/open-sans/opensans-bold-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'open_sansbold_italic';
+  src: url('./fonts/open-sans/opensans-bolditalic-webfont.woff2') format('woff2'),
+    url('./fonts/open-sans/opensans-bolditalic-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'open_sansextrabold';
+  src: url('./fonts/open-sans/opensans-extrabold-webfont.woff2') format('woff2'),
+    url('./fonts/open-sans/opensans-extrabold-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'open_sansitalic';
+  src: url('./fonts/open-sans/opensans-italic-webfont.woff2') format('woff2'),
+    url('./fonts/open-sans/opensans-italic-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'open_sanslight';
+  src: url('./fonts/open-sans/opensans-light-webfont.woff2') format('woff2'),
+    url('./fonts/open-sans/opensans-light-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'open_sanslight_italic';
+  src: url('./fonts/open-sans/opensans-lightitalic-webfont.woff2') format('woff2'),
+    url('./fonts/open-sans/opensans-lightitalic-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'open_sansregular';
+  src: url('./fonts/open-sans/opensans-regular-webfont.woff2') format('woff2'),
+    url('./fonts/open-sans/opensans-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'open_sanssemibold';
+  src: url('./fonts/open-sans/opensans-semibold-webfont.woff2') format('woff2'),
+    url('./fonts/open-sans/opensans-semibold-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'open_sanssemibold_italic';
+  src: url('./fonts/open-sans/opensans-semibolditalic-webfont.woff2') format('woff2'),
+    url('./fonts/open-sans/opensans-semibolditalic-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'open_sansbold';
+  src: url('./fonts/open-sans/opensans-bold-webfont.woff2') format('woff2'),
+    url('./fonts/open-sans/opensans-bold-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'open_sansbold';
+  src: url('./fonts/open-sans/opensans-bold-webfont.woff2') format('woff2'),
+    url('./fonts/open-sans/opensans-bold-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* FONTS */
 
 * {
   margin: 0;
@@ -115,10 +207,10 @@ input,
 button,
 select,
 textarea {
-  font-family: inherit;
   font-size: inherit;
   line-height: inherit;
   margin: 0;
+  font-family: var(--fontBlack);
 }
 
 textarea {
@@ -132,7 +224,26 @@ label {
   font-weight: bold;
 }
 
-/* COMMON STYLE 
+input::placeholder {
+  /* Chrome, FF, Opera, Safari 10.1+ */
+  color: #b3b3b3;
+  opacity: 1; /* FF */
+  font-family: var(--fontBlack);
+}
+
+input::-ms-input-placeholder {
+  /* Edge */
+  color: #b3b3b3;
+  font-family: var(--fontBlack);
+}
+
+input:-ms-input-placeholder {
+  /* IE 10-11 */
+  color: #b3b3b3;
+  font-family: var(--fontBlack);
+}
+
+/* COMMON STYLE
 =========================
 */
 
@@ -144,11 +255,10 @@ label {
 
 /* odometer custom style */
 .odometer {
-  color: var(--elliotSecondary);
+  color: white;
   font-size: 22px;
-  letter-spacing: 0.3em;
-  font-family: var(--fontCommon);
-  font-weight: 700;
+  letter-spacing: 0.1em;
+  font-family: var(--fontBlack);
 }
 
 @media (min-width: 768px) {
