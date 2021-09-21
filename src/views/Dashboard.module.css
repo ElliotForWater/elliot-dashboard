@@ -46,9 +46,13 @@
 }
 
 .greetings {
-  font-size: 0.6em;
+  font-size: 0.3em;
   font-weight: normal;
-  line-height: 0.6;
+  color: white;
+  text-align: center;
+  line-height: 1;
+  max-width: 700px;
+  margin: 0 auto;
 }
 
 @media (min-width: 450px) {

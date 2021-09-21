@@ -39,11 +39,11 @@
   "permissions": [
     "cookies",
     "storage",
-    "*://elliotforwater.com/"
+    "*://*.elliotforwater.com/"
   ],
   "externally_connectable": {
     "matches": [
-      "https://elliotforwater.com/*",
+      "https://*.elliotforwater.com/*",
       "*://www.elliotforwater.com/*"
     ]
   },

@@ -28,8 +28,8 @@ function Dashboard() {
           <SearchBar />
         </div>
         <div className={styles.timeContainer}>
+          <p className={styles.greetings}>The search engine that supports clean water projects</p>
           <time dateTime={JSON.stringify(date.toLocaleTimeString)}>{timeFormat}</time>
-          <p className={styles.greetings}>Join our community of changemakers!</p>
         </div>
       </section>
     </div>
