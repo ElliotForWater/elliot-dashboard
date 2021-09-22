@@ -41,7 +41,7 @@ const HeaderHome: FC = () => {
           <div className={styles.counterContainer}>
             {Odometer !== null && (
               <Odometer
-                // @ts-ignore6px
+                // @ts-ignore
                 value={odometerValue}
                 format='(,ddd)'
                 duration={1000}
