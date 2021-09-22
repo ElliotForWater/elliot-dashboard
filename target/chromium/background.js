@@ -33,10 +33,6 @@ chrome.runtime.onMessageExternal.addListener(
 
 // Listen to messages
 chrome.runtime.onMessage.addListener(async (req, sender, sendResponse) => {
-  console.log({request: req})
-  if (req.message === CHROME_ID) {
-    sendResponse({ message: 'extension_installed' });
-  }
   // Fetch search suggestion API
   if (req.contentScriptQuery === 'searchValue') {
     const url = `https://suggest.finditnowonline.com/SuggestionFeed/Suggestion?format=jsonp&gd=SY1002042&q=${req.value}`
