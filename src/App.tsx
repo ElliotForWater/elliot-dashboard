@@ -6,31 +6,45 @@ import Modal from './components/Modal/Modal'
 import Background from './components/Background/Background'
 import Dashboard from './views/Dashboard'
 import './odometer.css'
+import { fetchRandomPhoto } from './helpers/_photoFetch'
 
 export const extensionApiObject = window.chrome || window.browser
-
 declare global {
   interface Window {
     browser: any
     wrappedJSObject: any
   }
 }
+
+interface imageProps {
+  urls: { small: string; regular: string; full: string; raw: string }
+  alt_description: string
+  location: { title: string }
+  links: { html: string }
+  user: { links: { html: string }; name: string }
+}
+
 function App() {
   const user = useUserStateSyncedWithCookies()
-  const [, setNumbSearch] = useState(user.userState.numOfSearches)
+
+  const [photo, setPhoto] = useState<null | imageProps>(null)
 
   useEffect(() => {
-    // rerender component when cookies are updated
-    setNumbSearch(user.userState.numOfSearches)
-  }, [user.userState])
+    async function fetchPhoto() {
+      const fetchedPhoto = await fetchRandomPhoto()
+      setPhoto(fetchedPhoto)
+    }
+
+    fetchPhoto()
+  }, [])
 
   return (
     <UserContext.Provider value={user}>
-      <Background>
-        <div>
+      <Background photo={photo}>
+        <>
           <Header />
           <Dashboard />
-        </div>
+        </>
 
         <Modal.Host />
       </Background>

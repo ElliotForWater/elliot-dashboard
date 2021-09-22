@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { UserContextProps, UserStateProps, USER_STATE_DEFAULT } from '../context/UserContext'
 import {
   COOKIE_NAME_LANGUAGE,
@@ -16,20 +16,16 @@ const cookiesName: { [key: string]: any } = {
   openInNewTab: COOKIE_NAME_NEW_TAB,
 }
 
-const mergeCookiesWithUserState = (defaultUserState: UserStateProps): UserStateProps => {
+const mergeCookiesWithUserState = async (defaultUserState: UserStateProps): Promise<UserStateProps> => {
   const newUserState = { ...defaultUserState }
 
   for (const key in newUserState) {
     if (Object.getOwnPropertyDescriptor(cookiesName, key)) {
-      const printAddress = async () => {
-        const cookieValue = await getCookieValue(cookiesName[key])
+      const cookieValue = await getCookieValue(cookiesName[key])
 
-        if (cookieValue !== undefined) {
-          newUserState[key] = cookieValue
-        }
+      if (cookieValue !== undefined) {
+        newUserState[key] = cookieValue
       }
-
-      printAddress()
     }
   }
 
@@ -37,9 +33,16 @@ const mergeCookiesWithUserState = (defaultUserState: UserStateProps): UserStateP
 }
 
 export const useUserStateSyncedWithCookies = (): UserContextProps => {
-  const initialUserState = useMemo(() => mergeCookiesWithUserState(USER_STATE_DEFAULT), [])
+  const [userState, _setUserState] = useState(USER_STATE_DEFAULT)
 
-  const [userState, _setUserState] = useState(initialUserState)
+  useEffect(() => {
+    async function fetchCookies() {
+      const result = await mergeCookiesWithUserState(userState)
+      _setUserState(result)
+    }
+
+    fetchCookies()
+  }, [])
 
   const setUserState = useCallback((nextState: Partial<UserStateProps>): void => {
     _setUserState((prevState) => {
@@ -52,7 +55,7 @@ export const useUserStateSyncedWithCookies = (): UserContextProps => {
 
       for (const key in nextState) {
         if (Object.getOwnPropertyDescriptor(cookiesName, key)) {
-          setCookie(cookiesName[key], newState[key], { expirationDate: 365 })
+          setCookie(cookiesName[key], newState[key], { expires: 365 })
         }
       }
 

@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "ElliotForWater",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "description": "This extension sets your search engine to ElliotForWater to provide clean drinking water to countries in need with every search.",
   "icons": {
     "128": "icons/128.png",
@@ -43,11 +43,13 @@
     "storage",
     "tabs",
     "cookies",
-    "*://*.elliotforwater.com/"
+    "*://*.elliotforwater.com/",
+    "*://*.finditnowonline.com/"
   ],
   "content_scripts": [
     {
       "matches": [
+        "*://localhost:3000/*",
         "*://*.elliotforwater.com/*"
       ],
       "all_frames": true,

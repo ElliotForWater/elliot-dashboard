@@ -1,4 +1,4 @@
-const CHROME_ID = 'ddfnnfelkcabbeebchaegpcdcmdekoim';
+const CHROME_ID = 'ddfnnfelkcabbeebchaegpcdcmdekoim'
 
 function openNewTab() {
   chrome.tabs.create({
@@ -18,13 +18,25 @@ chrome.action.onClicked.addListener(() => {
   openNewTab()
 })
 
+// Very first startup of a new Google Profile
+chrome.runtime.onStartup.addListener(async (req, sender, sendResponse) => {
+  console.log('on startup')
+})
+
+// Listening to message frohttps://twitter.com/ghostm web app
+chrome.runtime.onMessageExternal.addListener(
+  function(request, sender, sendResponse) {
+      if (request.message === CHROME_ID) {
+        sendResponse({ message: 'extension_installed' });
+      }
+  });
+
 // Listen to messages
 chrome.runtime.onMessage.addListener(async (req, sender, sendResponse) => {
-  if (req.action === 'id' && req.value === CHROME_ID) {
-    console.log('recieve msg from webapp')
-    sendResponse({ message: 'extension_installed' })
+  console.log({request: req})
+  if (req.message === CHROME_ID) {
+    sendResponse({ message: 'extension_installed' });
   }
-
   // Fetch search suggestion API
   if (req.contentScriptQuery === 'searchValue') {
     const url = `https://suggest.finditnowonline.com/SuggestionFeed/Suggestion?format=jsonp&gd=SY1002042&q=${req.value}`

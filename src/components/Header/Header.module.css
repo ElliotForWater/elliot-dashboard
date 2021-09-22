@@ -25,6 +25,18 @@
   justify-content: flex-end;
 }
 
+.counterContainer {
+  display: flex;
+  align-items: center;
+  margin-right: 40px;
+}
+
+.counterText {
+  color: white;
+  font-size: 16px;
+  margin-left: 8px;
+}
+
 .dropletContainer {
   display: inline-flex;
   align-items: center;
@@ -33,22 +45,32 @@
 }
 
 .dropletImg {
-  margin-right: 3px;
-  width: 20px;
-  height: 19px;
+  margin-top: -5px;
+  width: 35px;
+  height: 35px;
 }
 
 .dropletCount {
-  margin-top: 2px;
+  margin-top: -2px;
+  padding-right: 6px;
+  font-size: 1.8em;
+  color: white;
+  font-family: var(--fontBlack);
 }
 
 .menu {
   margin-left: 1.2em;
-  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  margin-top: 2px;
 }
 
 @media (min-width: 768px) {
   .header {
     margin-bottom: 0;
+  }
+
+  .counterText {
+    font-size: 20px;
   }
 }

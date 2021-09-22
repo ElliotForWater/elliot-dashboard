@@ -1,43 +1,43 @@
-import React, { FC } from 'react'
-// import React, { useState, useEffect, FC } from 'react'
-// import { fetchCollectionPhotos } from '../../helpers/_unsplashFetch'
-
+import React, { useState, useEffect } from 'react'
 import styles from './Background.module.css'
 
-// interface imageProps {
-//   urls: { regular: string }
-//   alt_description: string
-//   location: { title: string }
-//   links: { html: string }
-//   user: { links: { html: string }; name: string }
-// }
+const Background = function ({ photo, children }) {
+  const [content, setContent] = useState(null)
 
-const Background: FC = function ({ children }) {
-  // const [photo, setPhoto] = useState<null | imageProps>(null)
+  useEffect(() => {
+    const showContent = setTimeout(() => {
+      setContent(children)
+    }, 100)
 
-  // useEffect(() => {
-  //   async function fetchPhoto() {
-  //     const fetchedPhoto = await fetchCollectionPhotos()
-  //     setPhoto(fetchedPhoto)
-  //   }
-
-  //   fetchPhoto()
-  // }, [])
+    return () => clearTimeout(showContent)
+  }, [])
 
   return (
     <div className={styles.container}>
-      {/* {photo && <img className={styles.img} src={photo.urls.regular} alt={photo.alt_description} />} */}
-      {children}
+      {/* Images w size token from: https://html.com/attributes/img-srcset */}
+      {photo?.src && (
+        <div className={styles.imageContainer}>
+          <img
+            className={styles.img}
+            srcSet={`
+              ${photo.src.medium} 480w,
+              ${photo.src.large} 1x,
+              ${photo.src.large2x} 2x,
+              ${photo.src.landscape} 3x,
+            `}
+            src={photo.src.medium}
+          />
 
-      {/* {photo && (
-        <footer className={styles.footer}>
-          <div>
-            <a href={photo.links.html}>Photo</a> /<a href={photo.user.links.html}> {photo.user.name}</a> /
-            <a href='https://unsplash.com'> Unsplash</a>
-          </div>
-          <div>{photo.location.title}</div>
-        </footer>
-      )} */}
+          {content}
+
+          <footer className={styles.footer}>
+            <div className={styles.linksContainer}>
+              <a href={photo.photographer_url}>{photo.photographer}</a> - <a href={photo.url}>Photo</a> on{' '}
+              <a href='https://www.pexels.com'>Pexel</a>
+            </div>
+          </footer>
+        </div>
+      )}
     </div>
   )
 }

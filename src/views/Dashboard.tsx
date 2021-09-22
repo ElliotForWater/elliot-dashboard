@@ -1,59 +1,35 @@
 import React, { useState, useEffect } from 'react'
 import SearchBar from '../components/SearchBar/SearchBar'
-import Odometer from 'react-odometerjs'
 import styles from './Dashboard.module.css'
-import Logo from '../images/logo.svg'
-
-function getLitersOfWater(litersOfWaterPerMillisecond: number) {
-  // Set dates from when we started delivering water until today
-  const dateStart = new Date('03/28/2020')
-  const dateNow = new Date()
-  // Calculate the number of seconds between the two dates
-  const millisecondsDifference = dateNow.getTime() - dateStart.getTime()
-
-  // Calculate the number of liters
-  return millisecondsDifference / litersOfWaterPerMillisecond
-}
+import Logo from '../images/logo_white.svg'
 
 function Dashboard() {
-  const [odometerValue, setOdometerValue] = useState<number>(0)
+  var [date, setDate] = useState(new Date())
 
   useEffect(() => {
-    const litersOfWaterPerMillisecond: number = 20000
-    setOdometerValue(getLitersOfWater(litersOfWaterPerMillisecond))
+    const timer = setInterval(() => setDate(new Date()), 1000)
 
-    const timerInterval: number = window.setInterval(() => {
-      setOdometerValue(getLitersOfWater(litersOfWaterPerMillisecond))
-    }, litersOfWaterPerMillisecond)
+    return function cleanup() {
+      clearInterval(timer)
+    }
+  })
 
-    return () => clearInterval(timerInterval)
-  }, [])
+  const timeFormat = Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric', hour12: false }).format(date)
 
   return (
-    <div>
+    <div className={styles.dashboardContainer}>
       <section className={styles.searchBarSection}>
         <div className={styles.logo}>
           <div className={styles.logoImgWrap}>
             <img className={styles.logoImg} src={Logo} alt='Elliot For Water' title='Elliot For Water' />
           </div>
-          <p className={styles.logoSubtitle}>For Water</p>
         </div>
         <div className={styles.searchWrap}>
           <SearchBar />
         </div>
-        <div className={styles.ctaContainer}>
-          <h1 className={styles.ctaTitle}>Join our community of changemakers!</h1>
-          <div className={styles.counterContainer}>
-            {Odometer !== null && (
-              <Odometer
-                // @ts-ignore
-                value={odometerValue}
-                format='(,ddd)'
-                duration={1000}
-              />
-            )}
-            <p className={styles.counterText}>Liters of water donated so far by Elliot For Water users</p>
-          </div>
+        <div className={styles.timeContainer}>
+          <p className={styles.greetings}>The search engine that supports clean water projects</p>
+          <time dateTime={JSON.stringify(date.toLocaleTimeString)}>{timeFormat}</time>
         </div>
       </section>
     </div>
