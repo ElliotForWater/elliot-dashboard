@@ -27,16 +27,14 @@ const SearchBar = ({ defaultSearchEngine }) => {
 
   const customSelectStyles = {
     option: (provided, state) => ({
-      ...provided,
       padding: 20,
+      ':hover': {
+        backgroundColor: 'var(--lightGrey)',
+      },
     }),
     control: (provided, state) => ({
       display: 'flex',
       border: '0 transparent',
-    }),
-    singleValue: (provided, state) => ({
-      ...provided,
-      color: 'red',
     }),
   }
 
@@ -50,7 +48,6 @@ const SearchBar = ({ defaultSearchEngine }) => {
   const { handleSubmit, register } = methods
 
   function handleMessage(msg) {
-    console.log({ msg })
     if (msg.target === 'fetch-suggestion') {
       setSuggestedWords(msg.data[1].slice(0, 10))
     }
@@ -194,7 +191,7 @@ const SearchBar = ({ defaultSearchEngine }) => {
                 isMulti={false}
                 isSearchable={false}
                 styles={customSelectStyles}
-                defaultInputValue='Elliot'
+                defaultValue={{ value: 'elliot', label: 'Elliot' }}
                 options={[
                   { value: 'elliot', label: 'Elliot' },
                   { value: 'bing', label: 'Bing' },

@@ -6,9 +6,10 @@ import { extensionApiObject } from '../App'
 import ButtonPrimary from '../components/Buttons/ButtonPrimary/ButtonPrimary'
 
 function Dashboard() {
-  var [date, setDate] = useState(new Date())
-  var [showWelcomeMessage, setShowWelcomeMessage] = useState(false)
-  var [defaultSearchEngine, setDefaultSearchEngine] = useState(false)
+  const [date, setDate] = useState(new Date())
+  const [showWelcomeMessage, setShowWelcomeMessage] = useState(false)
+  const [defaultSearchEngine, setDefaultSearchEngine] = useState(false)
+  const timeFormat = Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric', hour12: false }).format(date)
 
   useEffect(() => {
     const timer = setInterval(() => setDate(new Date()), 1000)
@@ -16,7 +17,6 @@ function Dashboard() {
     /* eslint-disable no-undef */
     if (extensionApiObject?.runtime) {
       if (window.location.search === '?install') {
-        console.log('installe param')
         setShowWelcomeMessage(true)
       }
     }
@@ -28,12 +28,9 @@ function Dashboard() {
   }, [])
 
   function handleDefaultSearchClick(searchEngine) {
-    console.log({ searchEngine })
     setDefaultSearchEngine(searchEngine)
     setShowWelcomeMessage(false)
   }
-
-  const timeFormat = Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric', hour12: false }).format(date)
 
   return (
     <div className={styles.dashboardContainer}>

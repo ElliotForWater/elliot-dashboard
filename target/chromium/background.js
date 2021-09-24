@@ -17,11 +17,6 @@ function openNewTab(param) {
 // Extension install event - open tab on install and updates
 chrome.runtime.onInstalled.addListener(async (details) => {
   if (details?.reason === 'install') {
-    
-    // chrome.runtime.sendMessage(chrome.runtime.id, {target: 'app', type: 'setMessage', body: 'How are you'})
-    // const tab = await getCurrentTab()
-    // chrome.tabs.sendMessage(tab.id, { target: 'onInstall' })
-
     openNewTab('install')
   }
 })
