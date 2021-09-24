@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useContext, useRef } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import fetchJsonp from 'fetch-jsonp'
+import Select from 'react-select'
 import { Input } from '../Forms/Inputs/Inputs'
 import { UserContext } from '../../context/UserContext'
 import classnames from 'classnames'
@@ -11,8 +12,10 @@ import SearchIcon from '../../images/search_icon.svg'
 import SearchIconComp from '../Icons/SearchIcon'
 import { queryNoWitheSpace } from '../../helpers/_utils'
 import { extensionApiObject } from '../../App'
+// import Drop from '../../images/water_droplet.svg'
+// import Bing from '../../images/Bing-Logo1.png'
 
-const SearchBar = () => {
+const SearchBar = ({ defaultSearchEngine }) => {
   const { userState, setUserState } = useContext(UserContext)
   const [searchValue, setSearchValue] = useState<string>('')
   const [highlightIndex, setHighlightIndex] = useState<number>(-1)
@@ -20,6 +23,22 @@ const SearchBar = () => {
   const [suggestedWords, setSuggestedWords] = useState<Array<string>>([])
   const [searchSuggestedWords, setSearchSuggestedWords] = useState(true)
   const inputEl = useRef(null)
+  const isElliot = defaultSearchEngine === 'elliot'
+
+  const customSelectStyles = {
+    option: (provided, state) => ({
+      ...provided,
+      padding: 20,
+    }),
+    control: (provided, state) => ({
+      display: 'flex',
+      border: '0 transparent',
+    }),
+    singleValue: (provided, state) => ({
+      ...provided,
+      color: 'red',
+    }),
+  }
 
   const methods = useForm({
     defaultValues: {
@@ -31,6 +50,7 @@ const SearchBar = () => {
   const { handleSubmit, register } = methods
 
   function handleMessage(msg) {
+    console.log({ msg })
     if (msg.target === 'fetch-suggestion') {
       setSuggestedWords(msg.data[1].slice(0, 10))
     }
@@ -120,7 +140,9 @@ const SearchBar = () => {
 
     setUserState({ numOfSearches: Number(userState.numOfSearches) + 1 })
     const queryNoSpace = queryNoWitheSpace(searchString)
-    const redirectQuery = `https://elliotforwater.com/search?query=${queryNoSpace}&type=web`
+    const redirectQuery = isElliot
+      ? `https://elliotforwater.com/search?query=${queryNoSpace}&type=web`
+      : `https://www.bing.com/search?q=${queryNoSpace}`
     window.location.href = redirectQuery
 
     resetDropdown()
@@ -167,6 +189,18 @@ const SearchBar = () => {
             <button className={styles.button} type='submit'>
               <img className={styles.searchIcon} src={SearchIcon} />
             </button>
+            <div className={styles.selectDefaultSearch}>
+              <Select
+                isMulti={false}
+                isSearchable={false}
+                styles={customSelectStyles}
+                defaultInputValue='Elliot'
+                options={[
+                  { value: 'elliot', label: 'Elliot' },
+                  { value: 'bing', label: 'Bing' },
+                ]}
+              />
+            </div>
           </form>
         </div>
       </FormProvider>

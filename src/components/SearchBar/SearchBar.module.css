@@ -6,13 +6,25 @@
 .input {
   outline: none;
   width: 100%;
-  padding: 15px 60px 15px 1em;
+  padding: 15px 60px 15px 7.5em;
   height: 3.4em;
   border-radius: 2em;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.06);
   border: 0 none transparent;
   font-size: 18px;
   font-family: var(--fontCommon);
+}
+
+.selectDefaultSearch {
+  position: absolute;
+  left: 20px;
+  top: 30%;
+  height: 3.5em;
+  width: 100px;
+}
+
+.selectDefaultSearch * {
+  background: white;
 }
 
 .button {

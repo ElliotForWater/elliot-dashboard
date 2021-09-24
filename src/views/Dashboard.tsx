@@ -10,40 +10,24 @@ function Dashboard() {
   var [showWelcomeMessage, setShowWelcomeMessage] = useState(false)
   var [defaultSearchEngine, setDefaultSearchEngine] = useState(false)
 
-  function handleMessage(msg) {
-    console.log('handle messag func', msg)
-    if (msg.target === 'onInstallAndUpdate') {
-      console.log('extension on InstallUpdate')
-      setShowWelcomeMessage(true)
-    }
-  }
-
-  /* eslint-disable no-undef */
-  if (extensionApiObject?.runtime) {
-    console.log('extension')
-    extensionApiObject.runtime.onMessage.addListener(handleMessage)
-    // } else {
-    //   if (searchSuggestedWords) {
-    //     fetchSuggestedWords()
-    //   }
-  }
-
-  // return () => {
-  //   if (extensionApiObject?.runtime) {
-  //     chrome.runtime.onMessage.removeListener(handleMessage)
-  //   }
-  // }
-  /* eslint-enable no-undef */
-
   useEffect(() => {
     const timer = setInterval(() => setDate(new Date()), 1000)
 
-    return function cleanup() {
+    /* eslint-disable no-undef */
+    if (extensionApiObject?.runtime) {
+      if (window.location.search === '?install') {
+        setShowWelcomeMessage(true)
+      }
+    }
+    /* eslint-enable no-undef */
+
+    return () => {
       clearInterval(timer)
     }
-  })
+  }, [defaultSearchEngine])
 
   function handleDefaultSearchClick(searchEngine) {
+    console.log({ searchEngine })
     setDefaultSearchEngine(searchEngine)
     setShowWelcomeMessage(false)
   }
@@ -58,22 +42,25 @@ function Dashboard() {
             <img className={styles.logoImg} src={Logo} alt='Elliot For Water' title='Elliot For Water' />
           </div>
         </div>
-<<<<<<< HEAD
-        <div className={styles.searchWrap}>
-          <SearchBar />
-        </div>
-        <div className={styles.timeContainer}>
-          <p className={styles.greetings}>The search engine that supports clean water projects</p>
-          <time dateTime={JSON.stringify(date.toLocaleTimeString)}>{timeFormat}</time>
-        </div>
-=======
         {showWelcomeMessage ? (
-          <div>
-            <h2>Give clean water by searching the web with Elliot!</h2>
-            <p>Choose between Elliot or Bing: your clicks will support clean water projects.</p>
-            <ButtonPrimary handleClick={() => handleDefaultSearchClick('bing')}>Bing</ButtonPrimary>
-            <ButtonPrimary handleClick={() => handleDefaultSearchClick('elliot')}>Elliot For Water</ButtonPrimary>
-            <p>You can a alternate search engine whenever you want</p>
+          <div className={styles.welcomeContainer}>
+            <h1 className={styles.welcomeTitle}>Give clean water by searching the web with Elliot dashboard!</h1>
+            <h4 className={styles.welcomeSubtitle}>
+              Choose your default search engine.
+              <br />
+              With Elliot or Bing, your clicks will support clean water projects.
+            </h4>
+            <div className={styles.buttonSearchEngine}>
+              <ButtonPrimary size='big' onClick={() => handleDefaultSearchClick('bing')}>
+                Bing
+              </ButtonPrimary>
+            </div>
+            <div className={styles.buttonSearchEngine}>
+              <ButtonPrimary size='big' onClick={() => handleDefaultSearchClick('elliot')}>
+                Elliot For Water
+              </ButtonPrimary>
+            </div>
+            <p className={styles.welcomeSmallText}>You can always switch search engine whenever you want</p>
           </div>
         ) : (
           <>
@@ -81,12 +68,11 @@ function Dashboard() {
               <SearchBar defaultSearchEngine={defaultSearchEngine} />
             </div>
             <div className={styles.timeContainer}>
+              <p className={styles.greetings}>The search engine that supports clean water projects</p>
               <time dateTime={JSON.stringify(date.toLocaleTimeString)}>{timeFormat}</time>
-              <p className={styles.greetings}>Join our community of changemakers!</p>
             </div>
           </>
         )}
->>>>>>> send message when installed
       </section>
     </div>
   )
