@@ -16,6 +16,7 @@ function Dashboard() {
     /* eslint-disable no-undef */
     if (extensionApiObject?.runtime) {
       if (window.location.search === '?install') {
+        console.log('installe param')
         setShowWelcomeMessage(true)
       }
     }
@@ -24,7 +25,7 @@ function Dashboard() {
     return () => {
       clearInterval(timer)
     }
-  }, [defaultSearchEngine])
+  }, [])
 
   function handleDefaultSearchClick(searchEngine) {
     console.log({ searchEngine })
