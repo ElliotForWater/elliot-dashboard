@@ -19,12 +19,19 @@
   position: absolute;
   left: 20px;
   top: 30%;
-  height: 3.5em;
-  width: 100px;
+  width: 80px;
+  height: 50px;
 }
 
-.selectDefaultSearch * {
-  background: white;
+.selectedValue {
+  opacity: 0;
+}
+
+.selectedIcon {
+  top: 10px;
+  position: absolute;
+  margin-top: 5px;
+  margin-right: 20px;
 }
 
 .button {

@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useContext, useRef } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import fetchJsonp from 'fetch-jsonp'
-import Select from 'react-select'
+import Select, { components } from 'react-select'
 import { Input } from '../Forms/Inputs/Inputs'
 import { UserContext } from '../../context/UserContext'
 import classnames from 'classnames'
@@ -12,8 +12,25 @@ import SearchIcon from '../../images/search_icon.svg'
 import SearchIconComp from '../Icons/SearchIcon'
 import { queryNoWitheSpace } from '../../helpers/_utils'
 import { extensionApiObject } from '../../App'
-// import Drop from '../../images/water_droplet.svg'
-// import Bing from '../../images/Bing-Logo1.png'
+import Drop from '../../images/water_droplet.svg'
+import Bing from '../../images/Bing-Logo1.png'
+
+interface SearchEngineProps {
+  value: string
+  label: string
+  icon: string
+}
+const searchEngines = [
+  { value: 'elliot', label: 'Elliot', icon: Drop },
+  { value: 'bing', label: 'Bing', icon: Bing },
+]
+
+const { Option, ValueContainer } = components
+const IconOption = (props) => (
+  <Option {...props}>
+    <img className={styles.optionIconImg} src={props.data.icon} style={{ width: 25 }} alt={props.data.label} />
+  </Option>
+)
 
 const SearchBar = ({ defaultSearchEngine }) => {
   const { userState, setUserState } = useContext(UserContext)
@@ -23,18 +40,48 @@ const SearchBar = ({ defaultSearchEngine }) => {
   const [suggestedWords, setSuggestedWords] = useState<Array<string>>([])
   const [searchSuggestedWords, setSearchSuggestedWords] = useState(true)
   const inputEl = useRef(null)
+  const defaultSearchObj: SearchEngineProps =
+    searchEngines.find((engine) => engine.value === defaultSearchEngine) || searchEngines[0]
   const isElliot = defaultSearchEngine === 'elliot'
+
+  const ContainerIcon = ({ innerProps, innerRef, children, ...props }) => {
+    return (
+      <ValueContainer {...innerProps} ref={innerRef} {...props}>
+        <img
+          className={styles.selectedIcon}
+          src={defaultSearchObj.icon}
+          style={{ width: 25 }}
+          alt={defaultSearchObj.label}
+        />
+        <span className={styles.selectedValue}>{children}</span>
+      </ValueContainer>
+    )
+  }
 
   const customSelectStyles = {
     option: (provided, state) => ({
-      padding: 20,
+      padding: 16,
+      backgroundColor: 'white',
       ':hover': {
         backgroundColor: 'var(--lightGrey)',
       },
     }),
+    menu: (provided, state) => ({
+      top: '17px',
+      position: 'absolute',
+      left: '-10px',
+      paddingTop: 20,
+      width: 55,
+    }),
     control: (provided, state) => ({
       display: 'flex',
       border: '0 transparent',
+    }),
+    container: (provided, state) => ({
+      marginTop: '-10px',
+    }),
+    singleValue: (provided, state) => ({
+      color: 'white',
     }),
   }
 
@@ -62,6 +109,8 @@ const SearchBar = ({ defaultSearchEngine }) => {
       console.log('error fetching suggested results')
     }
   }
+
+  useEffect(() => {}, [])
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -191,11 +240,9 @@ const SearchBar = ({ defaultSearchEngine }) => {
                 isMulti={false}
                 isSearchable={false}
                 styles={customSelectStyles}
-                defaultValue={{ value: 'elliot', label: 'Elliot' }}
-                options={[
-                  { value: 'elliot', label: 'Elliot' },
-                  { value: 'bing', label: 'Bing' },
-                ]}
+                defaultValue={defaultSearchObj}
+                options={searchEngines}
+                components={{ Option: IconOption, ValueContainer: ContainerIcon }}
               />
             </div>
           </form>
