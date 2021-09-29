@@ -39,19 +39,21 @@ const SearchBar = ({ defaultSearchEngine }) => {
   const [isSuggestionOpen, setIsSuggestionOpen] = useState<boolean>(false)
   const [suggestedWords, setSuggestedWords] = useState<Array<string>>([])
   const [searchSuggestedWords, setSearchSuggestedWords] = useState(true)
+
+  const defaultSearchEngineObject =
+    searchEngines.find((engine) => engine.value === defaultSearchEngine) || defaultSearchEngine[0]
+  const [searchEngineObj, setSearchEngineObj] = useState<SearchEngineProps>(defaultSearchEngineObject)
+
   const inputEl = useRef(null)
-  const defaultSearchObj: SearchEngineProps =
-    searchEngines.find((engine) => engine.value === defaultSearchEngine) || searchEngines[0]
-  const isElliot = defaultSearchEngine === 'elliot'
 
   const ContainerIcon = ({ innerProps, innerRef, children, ...props }) => {
     return (
       <ValueContainer {...innerProps} ref={innerRef} {...props}>
         <img
           className={styles.selectedIcon}
-          src={defaultSearchObj.icon}
+          src={searchEngineObj.icon}
           style={{ width: 25 }}
-          alt={defaultSearchObj.label}
+          alt={searchEngineObj.label}
         />
         <span className={styles.selectedValue}>{children}</span>
       </ValueContainer>
@@ -186,9 +188,10 @@ const SearchBar = ({ defaultSearchEngine }) => {
 
     setUserState({ numOfSearches: Number(userState.numOfSearches) + 1 })
     const queryNoSpace = queryNoWitheSpace(searchString)
-    const redirectQuery = isElliot
-      ? `https://elliotforwater.com/search?query=${queryNoSpace}&type=web`
-      : `https://www.bing.com/search?q=${queryNoSpace}`
+    const redirectQuery =
+      searchEngineObj.value === 'elliot'
+        ? `https://elliotforwater.com/search?query=${queryNoSpace}&type=web`
+        : `https://www.bing.com/search?q=${queryNoSpace}`
     window.location.href = redirectQuery
 
     resetDropdown()
@@ -211,6 +214,10 @@ const SearchBar = ({ defaultSearchEngine }) => {
     } else {
       setIsSuggestionOpen(false)
     }
+  }
+
+  function handleChangeSearch(newSearchObj) {
+    setSearchEngineObj(newSearchObj)
   }
 
   return (
@@ -240,9 +247,10 @@ const SearchBar = ({ defaultSearchEngine }) => {
                 isMulti={false}
                 isSearchable={false}
                 styles={customSelectStyles}
-                defaultValue={defaultSearchObj}
+                defaultValue={searchEngineObj}
                 options={searchEngines}
                 components={{ Option: IconOption, ValueContainer: ContainerIcon }}
+                onChange={handleChangeSearch}
               />
             </div>
           </form>
