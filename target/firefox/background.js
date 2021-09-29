@@ -1,11 +1,13 @@
-function openNewTab() {
-  browser.tabs.create({})
+function openNewTab(param) {
+  browser.tabs.create({
+    url:  param ? `chrome://newtab?${param}` : 'chrome://newtab'
+  })
 }
 
 // Extension install event - open tab on install and updates
 browser.runtime.onInstalled.addListener((details) => {
-  if (details?.reason === 'install' || details?.reason === 'update') {
-    openNewTab()
+  if (details?.reason === 'install') {
+    openNewTab('install')
   }
 })
 
