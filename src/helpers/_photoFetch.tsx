@@ -9,18 +9,19 @@ export const fetchRandomPhoto = async function () {
 
   const date = new Date()
   const today = date.toLocaleDateString()
-  const todayNumber = date.toLocaleDateString('en-GB', { day: 'numeric' })
+  const todayNumber = Number(date.toLocaleDateString('en-GB', { day: 'numeric' }))
   let dailyPhoto = localStorage.getItem('dailyPhoto')
   const savedPhotoDate = localStorage.getItem('savedPhotoDate')
   const isNewDay = savedPhotoDate !== JSON.stringify(today)
 
-  if (!dailyPhoto || isNewDay) {
+  if (!dailyPhoto || dailyPhoto === 'undefined' || isNewDay) {
     try {
       const res = await fetch(`${urlCollection}`, { headers })
+      console.log({ res })
 
       if (res.ok) {
         const photos = await res.json()
-        dailyPhoto = photos.media[todayNumber]
+        dailyPhoto = photos.media[todayNumber - 1]
         localStorage.setItem('dailyPhoto', JSON.stringify(dailyPhoto))
         localStorage.setItem('savedPhotoDate', JSON.stringify(today))
 
