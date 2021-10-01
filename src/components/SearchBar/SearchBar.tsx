@@ -45,18 +45,17 @@ const SearchBar = () => {
   const defaultSearchEngineObject: SearchEngineProps =
     searchEngines.find((engine) => engine.value === defaultSearchEngine) || searchEngines[1]
   const [searchEngineObj, setSearchEngineObj] = useState(defaultSearchEngineObject)
-
   const inputEl = useRef(null)
 
-  const ContainerIcon = ({ innerProps, innerRef, children, ...props }) => {
+  const ContainerIcon = ({ children, ...rest }) => {
     return (
-      <ValueContainer {...innerProps} ref={innerRef} {...props}>
-        <img
+      <ValueContainer {...rest}>
+        {/* <img
           className={styles.selectedIcon}
           src={searchEngineObj.icon}
           style={{ width: 25 }}
           alt={searchEngineObj.label}
-        />
+        /> */}
         <span className={styles.selectedValue}>{children}</span>
       </ValueContainer>
     )
