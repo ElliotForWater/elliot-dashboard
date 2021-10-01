@@ -17,7 +17,6 @@ export const fetchRandomPhoto = async function () {
   if (!dailyPhoto || dailyPhoto === 'undefined' || isNewDay) {
     try {
       const res = await fetch(`${urlCollection}`, { headers })
-      console.log({ res })
 
       if (res.ok) {
         const photos = await res.json()
