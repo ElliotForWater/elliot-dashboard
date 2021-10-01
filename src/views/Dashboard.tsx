@@ -8,7 +8,6 @@ import ButtonPrimary from '../components/Buttons/ButtonPrimary/ButtonPrimary'
 function Dashboard() {
   const [date, setDate] = useState(new Date())
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(false)
-  const [defaultSearchEngine, setDefaultSearchEngine] = useState('elliot')
   const timeFormat = Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric', hour12: false }).format(date)
 
   useEffect(() => {
@@ -28,8 +27,9 @@ function Dashboard() {
   }, [])
 
   function handleDefaultSearchClick(searchEngine) {
-    setDefaultSearchEngine(searchEngine)
+    localStorage.setItem('defaultSearchEngine', searchEngine)
     setShowWelcomeMessage(false)
+    window.location.search = ''
   }
 
   return (
@@ -42,11 +42,11 @@ function Dashboard() {
         </div>
         {showWelcomeMessage ? (
           <div className={styles.welcomeContainer}>
-            <h1 className={styles.welcomeTitle}>Give clean water by searching the web with Elliot dashboard!</h1>
+            <h1 className={styles.welcomeTitle}>Give clean water by searching the web!</h1>
             <h4 className={styles.welcomeSubtitle}>
-              Choose your default search engine.
+              Choose your default search engine between Bing or Elliot:
               <br />
-              With Elliot or Bing, your clicks will support clean water projects.
+              your clicks will always support clean water projects.
             </h4>
             <div className={styles.buttonSearchEngine}>
               <ButtonPrimary size='big' onClick={() => handleDefaultSearchClick('bing')}>
@@ -58,12 +58,12 @@ function Dashboard() {
                 Elliot For Water
               </ButtonPrimary>
             </div>
-            <p className={styles.welcomeSmallText}>You can always switch search engine whenever you want</p>
+            <p className={styles.welcomeSmallText}>You can always switch search engine at any moment</p>
           </div>
         ) : (
           <>
             <div className={styles.searchWrap}>
-              <SearchBar defaultSearchEngine={defaultSearchEngine} />
+              <SearchBar />
             </div>
             <div className={styles.timeContainer}>
               <p className={styles.greetings}>The search engine that supports clean water projects</p>

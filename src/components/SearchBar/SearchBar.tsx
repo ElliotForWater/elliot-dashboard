@@ -20,6 +20,7 @@ interface SearchEngineProps {
   label: string
   icon: string
 }
+
 const searchEngines = [
   { value: 'elliot', label: 'Elliot', icon: Drop },
   { value: 'bing', label: 'Bing', icon: Bing },
@@ -32,7 +33,7 @@ const IconOption = (props) => (
   </Option>
 )
 
-const SearchBar = ({ defaultSearchEngine }) => {
+const SearchBar = () => {
   const { userState, setUserState } = useContext(UserContext)
   const [searchValue, setSearchValue] = useState<string>('')
   const [highlightIndex, setHighlightIndex] = useState<number>(-1)
@@ -40,9 +41,10 @@ const SearchBar = ({ defaultSearchEngine }) => {
   const [suggestedWords, setSuggestedWords] = useState<Array<string>>([])
   const [searchSuggestedWords, setSearchSuggestedWords] = useState(true)
 
-  const defaultSearchEngineObject =
-    searchEngines.find((engine) => engine.value === defaultSearchEngine) || defaultSearchEngine[0]
-  const [searchEngineObj, setSearchEngineObj] = useState<SearchEngineProps>(defaultSearchEngineObject)
+  const defaultSearchEngine = localStorage.getItem('defaultSearchEngine') || 'bing'
+  const defaultSearchEngineObject: SearchEngineProps =
+    searchEngines.find((engine) => engine.value === defaultSearchEngine) || searchEngines[1]
+  const [searchEngineObj, setSearchEngineObj] = useState(defaultSearchEngineObject)
 
   const inputEl = useRef(null)
 
@@ -111,8 +113,6 @@ const SearchBar = ({ defaultSearchEngine }) => {
       console.log('error fetching suggested results')
     }
   }
-
-  useEffect(() => {}, [])
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -191,7 +191,7 @@ const SearchBar = ({ defaultSearchEngine }) => {
     const redirectQuery =
       searchEngineObj.value === 'elliot'
         ? `https://elliotforwater.com/search?query=${queryNoSpace}&type=web`
-        : `https://www.bing.com/search?q=${queryNoSpace}`
+        : `${process.env.BING_LINKVERTISE}${queryNoSpace}`
     window.location.href = redirectQuery
 
     resetDropdown()
@@ -218,6 +218,7 @@ const SearchBar = ({ defaultSearchEngine }) => {
 
   function handleChangeSearch(newSearchObj) {
     setSearchEngineObj(newSearchObj)
+    localStorage.setItem('defaultSearchEngine', newSearchObj.value)
   }
 
   return (

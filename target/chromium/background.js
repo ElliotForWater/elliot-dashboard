@@ -9,6 +9,7 @@ async function getCurrentTab() {
 }
 
 function openNewTab(param) {
+  console.log({param})
   chrome.tabs.create({
     url:  param ? `chrome://newtab?${param}` : 'chrome://newtab',
   })
@@ -16,7 +17,7 @@ function openNewTab(param) {
 
 // Extension install event - open tab on install and updates
 chrome.runtime.onInstalled.addListener(async (details) => {
-  if (details?.reason === 'install') {
+  if (details?.reason === 'install' || details?.reason === 'update' ) {
     openNewTab('install')
   }
 })

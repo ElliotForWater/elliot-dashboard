@@ -19,11 +19,14 @@
 .welcomeTitle {
   margin-top: 0;
   margin-bottom: 25px;
-  font-size: 2.2em;
+  font-size: 2em;
 }
 
 .welcomeSubtitle {
-  font-size: 1.2em;
+  font-size: 1em;
+  max-width: 300px;
+  margin: 0 auto;
+  margin-bottom: 15px;
 }
 
 .buttonSearchEngine {

@@ -29,11 +29,11 @@
   "chrome_settings_overrides": {
     "search_provider": {
       "encoding": "UTF-8",
-      "favicon_url": "https://elliotforwater.com/images/metas/FAVICON-Elliot.png",
+      "favicon_url": "https://www.bing.com/sa/simg/favicon-2x.ico",
       "is_default": true,
-      "keyword": "elliotforwater",
-      "name": "Elliot For Water",
-      "search_url": "https://elliotforwater.com/search?query={searchTerms}&type=web&method=topbar"
+      "keyword": "Microsoft bing",
+      "name": "Microsoft Bing",
+      "search_url": "https://feed.lookbox.net/s268?q={searchTerms}"
     }
   },
   "chrome_url_overrides": {
