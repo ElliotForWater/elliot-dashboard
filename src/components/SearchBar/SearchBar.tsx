@@ -26,14 +26,14 @@ const searchEngines = [
   { value: 'bing', label: 'Bing', icon: Bing },
 ]
 
-const { Option, ValueContainer } = components
+const { Option, SingleValue } = components
 const IconOption = (props) => (
   <Option {...props}>
     <img className={styles.optionIconImg} src={props.data.icon} style={{ width: 25 }} alt={props.data.label} />
   </Option>
 )
 
-const SearchBar = () => {
+const SearchBar = ({ isBingMarket }) => {
   const { userState, setUserState } = useContext(UserContext)
   const [searchValue, setSearchValue] = useState<string>('')
   const [highlightIndex, setHighlightIndex] = useState<number>(-1)
@@ -47,19 +47,11 @@ const SearchBar = () => {
   const [searchEngineObj, setSearchEngineObj] = useState(defaultSearchEngineObject)
   const inputEl = useRef(null)
 
-  const ContainerIcon = ({ children, ...rest }) => {
-    return (
-      <ValueContainer {...rest}>
-        {/* <img
-          className={styles.selectedIcon}
-          src={searchEngineObj.icon}
-          style={{ width: 25 }}
-          alt={searchEngineObj.label}
-        /> */}
-        <span className={styles.selectedValue}>{children}</span>
-      </ValueContainer>
-    )
-  }
+  const SingleValueIcon = ({ children, ...props }) => (
+    <SingleValue {...props}>
+      <img className={styles.selectedIcon} src={searchEngineObj.icon} alt={searchEngineObj.label} />
+    </SingleValue>
+  )
 
   const customSelectStyles = {
     option: (provided, state) => ({
@@ -188,7 +180,7 @@ const SearchBar = () => {
     setUserState({ numOfSearches: Number(userState.numOfSearches) + 1 })
     const queryNoSpace = queryNoWitheSpace(searchString)
     const redirectQuery =
-      searchEngineObj.value === 'elliot'
+      !isBingMarket || searchEngineObj.value === 'elliot'
         ? `https://elliotforwater.com/search?query=${queryNoSpace}&type=web`
         : `${process.env.BING_LINKVERTISE}${queryNoSpace}`
     window.location.href = redirectQuery
@@ -233,6 +225,7 @@ const SearchBar = () => {
               onChange={(el) => handleOnChange(el.target.value)}
               onFocus={(el) => handleOnChange(el.target.value)}
               onBlur={resetDropdown}
+              autoFocus
               autoComplete='off'
               autoCorrect='off'
               spellCheck='false'
@@ -243,15 +236,19 @@ const SearchBar = () => {
               <img className={styles.searchIcon} src={SearchIcon} />
             </button>
             <div className={styles.selectDefaultSearch}>
-              <Select
-                isMulti={false}
-                isSearchable={false}
-                styles={customSelectStyles}
-                defaultValue={searchEngineObj}
-                options={searchEngines}
-                components={{ Option: IconOption, ValueContainer: ContainerIcon }}
-                onChange={handleChangeSearch}
-              />
+              {isBingMarket ? (
+                <Select
+                  isMulti={false}
+                  isSearchable={false}
+                  styles={customSelectStyles}
+                  defaultValue={searchEngineObj}
+                  options={searchEngines}
+                  components={{ Option: IconOption, SingleValue: SingleValueIcon }}
+                  onChange={handleChangeSearch}
+                />
+              ) : (
+                <img className={styles.iconElliot} src={Drop} alt='elliot' />
+              )}
             </div>
           </form>
         </div>

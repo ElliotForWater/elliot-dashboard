@@ -9,7 +9,6 @@ async function getCurrentTab() {
 }
 
 function openNewTab(param) {
-  console.log({param})
   chrome.tabs.create({
     url:  param ? `chrome://newtab?${param}` : 'chrome://newtab',
   })
@@ -60,4 +59,3 @@ chrome.runtime.onMessage.addListener(async (req) => {
     return true //respond async
   }
 })
-

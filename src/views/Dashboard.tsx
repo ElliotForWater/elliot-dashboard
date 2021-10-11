@@ -3,11 +3,14 @@ import SearchBar from '../components/SearchBar/SearchBar'
 import styles from './Dashboard.module.css'
 import Logo from '../images/logo_white.svg'
 import { extensionApiObject } from '../App'
+import { fetchIp, bingMarketCountries } from '../helpers/_ipFetch'
 import ButtonPrimary from '../components/Buttons/ButtonPrimary/ButtonPrimary'
 
 function Dashboard() {
   const [date, setDate] = useState(new Date())
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(false)
+  const [isBingMarket, setIsBingMarket] = useState(false)
+
   const timeFormat = Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric', hour12: false }).format(date)
 
   useEffect(() => {
@@ -20,6 +23,14 @@ function Dashboard() {
       }
     }
     /* eslint-enable no-undef */
+
+    async function getCountry() {
+      const { country } = await fetchIp()
+      setIsBingMarket(bingMarketCountries.includes(country))
+      return country
+    }
+
+    getCountry()
 
     return () => {
       clearInterval(timer)
@@ -40,7 +51,7 @@ function Dashboard() {
             <img className={styles.logoImg} src={Logo} alt='Elliot For Water' title='Elliot For Water' />
           </div>
         </div>
-        {showWelcomeMessage ? (
+        {showWelcomeMessage && isBingMarket ? (
           <div className={styles.welcomeContainer}>
             <h1 className={styles.welcomeTitle}>Give clean water by searching the web!</h1>
             <h4 className={styles.welcomeSubtitle}>
@@ -63,7 +74,7 @@ function Dashboard() {
         ) : (
           <>
             <div className={styles.searchWrap}>
-              <SearchBar />
+              <SearchBar isBingMarket={isBingMarket} />
             </div>
             <div className={styles.timeContainer}>
               <p className={styles.greetings}>The search engine that supports clean water projects</p>
