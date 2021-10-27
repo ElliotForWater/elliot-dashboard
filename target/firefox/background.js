@@ -1,7 +1,6 @@
 function openNewTab(param) {
-  console.log({param})
   browser.tabs.create({
-    url:  param ? `index.html?${param}` : 'index.html',
+    url:  param ? `index.html?${param}` : 'index.html?lala',
   })
 }
 

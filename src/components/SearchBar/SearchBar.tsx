@@ -1,6 +1,6 @@
 /// <reference types="chrome"/>
 
-import React, { useState, useEffect, useContext, useRef } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import fetchJsonp from 'fetch-jsonp'
 import Select, { components } from 'react-select'
@@ -45,7 +45,6 @@ const SearchBar = ({ isBingMarket }) => {
   const defaultSearchEngineObject: SearchEngineProps =
     searchEngines.find((engine) => engine.value === defaultSearchEngine) || searchEngines[1]
   const [searchEngineObj, setSearchEngineObj] = useState(defaultSearchEngineObject)
-  const inputEl = useRef(null)
 
   const SingleValueIcon = ({ children, ...props }) => (
     <SingleValue {...props}>
@@ -216,7 +215,7 @@ const SearchBar = ({ isBingMarket }) => {
     <div className={styles.wrapper}>
       <FormProvider {...methods}>
         <div className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-          <form ref={inputEl}>
+          <form>
             <Input
               name='query'
               type='search'

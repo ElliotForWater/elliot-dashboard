@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes, SelectHTMLAttributes, TextareaHTMLAttributes } from 'react'
+import React, { InputHTMLAttributes, SelectHTMLAttributes, TextareaHTMLAttributes, useRef, useEffect } from 'react'
 import classnames from 'classnames'
 import styles from './Inputs.module.css'
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -10,12 +10,26 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   customClassname?: string
 }
 export function Input({ name, type, register, rules = {}, errors = {}, customClassname, ...rest }: InputProps) {
+  const { ref, ...restInputEl } = register('firstName')
+  const firstNameRef = useRef<HTMLInputElement | null>(null)
+
+  useEffect(() => {
+    if (rest.autoFocus && firstNameRef.current) {
+      firstNameRef.current.focus()
+    }
+  }, [])
+
   return (
     <div className={type === 'checkbox' || type === 'radiobox' ? styles.inputWrapInline : styles.inputWrap}>
       <input
         className={classnames({ [styles.inputError]: errors[name] }, customClassname, styles.input)}
         type={type}
         {...register(name, rules)}
+        ref={(e) => {
+          ref(e)
+          firstNameRef.current = e
+        }}
+        {...restInputEl}
         {...rest}
       />
 

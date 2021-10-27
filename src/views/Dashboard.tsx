@@ -5,17 +5,13 @@ import Logo from '../images/logo_white.svg'
 import { extensionApiObject } from '../App'
 import { fetchIp, bingMarketCountries } from '../helpers/_ipFetch'
 import ButtonPrimary from '../components/Buttons/ButtonPrimary/ButtonPrimary'
+import Timestamp from '../components/TimeStamp/TimeStamp'
 
 function Dashboard() {
-  const [date, setDate] = useState(new Date())
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(false)
   const [isBingMarket, setIsBingMarket] = useState(false)
 
-  const timeFormat = Intl.DateTimeFormat('en', { hour: 'numeric', minute: 'numeric', hour12: false }).format(date)
-
   useEffect(() => {
-    const timer = setInterval(() => setDate(new Date()), 1000)
-
     /* eslint-disable no-undef */
     if (extensionApiObject?.runtime) {
       if (window.location.search === '?install') {
@@ -31,10 +27,6 @@ function Dashboard() {
     }
 
     getCountry()
-
-    return () => {
-      clearInterval(timer)
-    }
   }, [])
 
   function handleDefaultSearchClick(searchEngine) {
@@ -53,9 +45,11 @@ function Dashboard() {
         </div>
         {showWelcomeMessage && isBingMarket ? (
           <div className={styles.welcomeContainer}>
-            <h1 className={styles.welcomeTitle}>Give clean water by searching the web!</h1>
+            <h1 className={styles.welcomeTitle}>
+              Give clean water <br /> by searching the web!
+            </h1>
             <h4 className={styles.welcomeSubtitle}>
-              Choose your default search engine between Bing or Elliot:
+              Choose your default search engine between Bing or Elliot.
               <br />
               your clicks will always support clean water projects.
             </h4>
@@ -78,7 +72,7 @@ function Dashboard() {
             </div>
             <div className={styles.timeContainer}>
               <p className={styles.greetings}>The search engine that supports clean water projects</p>
-              <time dateTime={JSON.stringify(date.toLocaleTimeString)}>{timeFormat}</time>
+              <Timestamp />
             </div>
           </>
         )}
