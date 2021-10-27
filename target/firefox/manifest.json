@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "ElliotForWater",
-  "version": "2.1.1",
+  "version": "2.2.1",
   "description": "This extension sets your search engine to ElliotForWater to provide clean drinking water to countries in need with every search.",
   "icons": {
     "128": "icons/128.png",
