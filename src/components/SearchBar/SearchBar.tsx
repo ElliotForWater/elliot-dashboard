@@ -1,8 +1,9 @@
 /// <reference types="chrome"/>
 
-import React, { useState, useEffect, useContext, useRef } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import fetchJsonp from 'fetch-jsonp'
+import Select, { components } from 'react-select'
 import { Input } from '../Forms/Inputs/Inputs'
 import { UserContext } from '../../context/UserContext'
 import classnames from 'classnames'
@@ -11,15 +12,72 @@ import SearchIcon from '../../images/search_icon.svg'
 import SearchIconComp from '../Icons/SearchIcon'
 import { queryNoWitheSpace } from '../../helpers/_utils'
 import { extensionApiObject } from '../../App'
+import Drop from '../../images/water_droplet.svg'
+import Bing from '../../images/Bing-Logo1.png'
 
-const SearchBar = () => {
+interface SearchEngineProps {
+  value: string
+  label: string
+  icon: string
+}
+
+const searchEngines = [
+  { value: 'elliot', label: 'Elliot', icon: Drop },
+  { value: 'bing', label: 'Bing', icon: Bing },
+]
+
+const { Option, SingleValue } = components
+const IconOption = (props) => (
+  <Option {...props}>
+    <img className={styles.optionIconImg} src={props.data.icon} style={{ width: 25 }} alt={props.data.label} />
+  </Option>
+)
+
+const SearchBar = ({ isBingMarket }) => {
   const { userState, setUserState } = useContext(UserContext)
   const [searchValue, setSearchValue] = useState<string>('')
   const [highlightIndex, setHighlightIndex] = useState<number>(-1)
   const [isSuggestionOpen, setIsSuggestionOpen] = useState<boolean>(false)
   const [suggestedWords, setSuggestedWords] = useState<Array<string>>([])
   const [searchSuggestedWords, setSearchSuggestedWords] = useState(true)
-  const inputEl = useRef(null)
+
+  const defaultSearchEngine = localStorage.getItem('defaultSearchEngine') || 'bing'
+  const defaultSearchEngineObject: SearchEngineProps =
+    searchEngines.find((engine) => engine.value === defaultSearchEngine) || searchEngines[1]
+  const [searchEngineObj, setSearchEngineObj] = useState(defaultSearchEngineObject)
+
+  const SingleValueIcon = ({ children, ...props }) => (
+    <SingleValue {...props}>
+      <img className={styles.selectedIcon} src={searchEngineObj.icon} alt={searchEngineObj.label} />
+    </SingleValue>
+  )
+
+  const customSelectStyles = {
+    option: (provided, state) => ({
+      padding: 16,
+      backgroundColor: 'white',
+      ':hover': {
+        backgroundColor: 'var(--lightGrey)',
+      },
+    }),
+    menu: (provided, state) => ({
+      top: '17px',
+      position: 'absolute',
+      left: '-10px',
+      paddingTop: 20,
+      width: 55,
+    }),
+    control: (provided, state) => ({
+      display: 'flex',
+      border: '0 transparent',
+    }),
+    container: (provided, state) => ({
+      marginTop: '-10px',
+    }),
+    singleValue: (provided, state) => ({
+      color: 'white',
+    }),
+  }
 
   const methods = useForm({
     defaultValues: {
@@ -120,7 +178,10 @@ const SearchBar = () => {
 
     setUserState({ numOfSearches: Number(userState.numOfSearches) + 1 })
     const queryNoSpace = queryNoWitheSpace(searchString)
-    const redirectQuery = `https://elliotforwater.com/search?query=${queryNoSpace}&type=web`
+    const redirectQuery =
+      !isBingMarket || searchEngineObj.value === 'elliot'
+        ? `https://elliotforwater.com/search?query=${queryNoSpace}&type=web`
+        : `${process.env.BING_LINKVERTISE}${queryNoSpace}`
     window.location.href = redirectQuery
 
     resetDropdown()
@@ -145,11 +206,16 @@ const SearchBar = () => {
     }
   }
 
+  function handleChangeSearch(newSearchObj) {
+    setSearchEngineObj(newSearchObj)
+    localStorage.setItem('defaultSearchEngine', newSearchObj.value)
+  }
+
   return (
     <div className={styles.wrapper}>
       <FormProvider {...methods}>
         <div className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-          <form ref={inputEl}>
+          <form>
             <Input
               name='query'
               type='search'
@@ -158,6 +224,7 @@ const SearchBar = () => {
               onChange={(el) => handleOnChange(el.target.value)}
               onFocus={(el) => handleOnChange(el.target.value)}
               onBlur={resetDropdown}
+              autoFocus
               autoComplete='off'
               autoCorrect='off'
               spellCheck='false'
@@ -167,6 +234,21 @@ const SearchBar = () => {
             <button className={styles.button} type='submit'>
               <img className={styles.searchIcon} src={SearchIcon} />
             </button>
+            <div className={styles.selectDefaultSearch}>
+              {isBingMarket ? (
+                <Select
+                  isMulti={false}
+                  isSearchable={false}
+                  styles={customSelectStyles}
+                  defaultValue={searchEngineObj}
+                  options={searchEngines}
+                  components={{ Option: IconOption, SingleValue: SingleValueIcon }}
+                  onChange={handleChangeSearch}
+                />
+              ) : (
+                <img className={styles.iconElliot} src={Drop} alt='elliot' />
+              )}
+            </div>
           </form>
         </div>
       </FormProvider>

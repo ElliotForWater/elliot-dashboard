@@ -4,6 +4,6 @@ import SearchBar from './SearchBar'
 
 describe('SearchBar', () => {
   it('should render without throwing an error', function () {
-    shallow(<SearchBar />)
+    shallow(<SearchBar defaultSearchEngine='bing' />)
   })
 })

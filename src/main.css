@@ -134,7 +134,7 @@ html {
 }
 
 body {
-  background: white;
+  background: #505a602b;
   color: var(--textColor);
   font-weight: 400;
   min-height: 100%;
@@ -228,19 +228,16 @@ input::placeholder {
   /* Chrome, FF, Opera, Safari 10.1+ */
   color: #b3b3b3;
   opacity: 1; /* FF */
-  font-family: var(--fontBlack);
 }
 
 input::-ms-input-placeholder {
   /* Edge */
   color: #b3b3b3;
-  font-family: var(--fontBlack);
 }
 
 input:-ms-input-placeholder {
   /* IE 10-11 */
   color: #b3b3b3;
-  font-family: var(--fontBlack);
 }
 
 /* COMMON STYLE

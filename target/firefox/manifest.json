@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "ElliotForWater",
-  "version": "2.1.0",
+  "version": "2.2.2",
   "description": "This extension sets your search engine to ElliotForWater to provide clean drinking water to countries in need with every search.",
   "icons": {
     "128": "icons/128.png",
@@ -26,16 +26,6 @@
       "background.js"
     ]
   },
-  "chrome_settings_overrides": {
-    "search_provider": {
-      "encoding": "UTF-8",
-      "favicon_url": "https://elliotforwater.com/images/metas/FAVICON-Elliot.png",
-      "is_default": true,
-      "keyword": "elliotforwater",
-      "name": "Elliot For Water",
-      "search_url": "https://elliotforwater.com/search?query={searchTerms}&type=web&method=topbar"
-    }
-  },
   "chrome_url_overrides": {
     "newtab": "index.html"
   },
@@ -49,7 +39,6 @@
   "content_scripts": [
     {
       "matches": [
-        "*://localhost:3000/*",
         "*://*.elliotforwater.com/*"
       ],
       "all_frames": true,

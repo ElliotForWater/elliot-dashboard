@@ -1,15 +1,25 @@
 const CHROME_ID = 'ddfnnfelkcabbeebchaegpcdcmdekoim'
+chrome.manifest = chrome.runtime.getManifest()
 
-function openNewTab() {
+
+async function getCurrentTab() {
+  let queryOptions = { active: true, currentWindow: true };
+  let [tab] = await chrome.tabs.query(queryOptions);
+  return tab;
+}
+
+function openNewTab(param) {
   chrome.tabs.create({
-    url: 'chrome://newtab',
+    selected: false,
+    url:  param ? `chrome://newtab?${param}` : 'chrome://newtab'
   })
 }
 
+
 // Extension install event - open tab on install and updates
-chrome.runtime.onInstalled.addListener((details) => {
-  if (details?.reason === 'install' || details?.reason === 'update') {
-    openNewTab()
+chrome.runtime.onInstalled.addListener(async (details) => {
+  if (details?.reason === 'install' || details?.reason === 'update' ) {
+    openNewTab('install')
   }
 })
 
@@ -32,7 +42,8 @@ chrome.runtime.onMessageExternal.addListener(
   });
 
 // Listen to messages
-chrome.runtime.onMessage.addListener(async (req, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener(async (req) => {
+
   // Fetch search suggestion API
   if (req.contentScriptQuery === 'searchValue') {
     const url = `https://suggest.finditnowonline.com/SuggestionFeed/Suggestion?format=jsonp&gd=SY1002042&q=${req.value}`

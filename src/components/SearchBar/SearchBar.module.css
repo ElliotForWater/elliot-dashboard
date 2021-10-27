@@ -6,13 +6,28 @@
 .input {
   outline: none;
   width: 100%;
-  padding: 15px 60px 15px 1em;
+  padding: 15px 60px 15px 6em;
   height: 3.4em;
   border-radius: 2em;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.06);
   border: 0 none transparent;
   font-size: 18px;
   font-family: var(--fontCommon);
+}
+
+.selectDefaultSearch {
+  position: absolute;
+  left: 20px;
+  top: 30%;
+  width: 80px;
+  height: 50px;
+}
+
+.selectedIcon {
+  width: 30px;
+  position: relative;
+  top: 12px;
+  left: -5px;
 }
 
 .button {
@@ -30,6 +45,13 @@
 .searchIcon {
   width: inherit;
   height: inherit;
+}
+
+.iconElliot {
+  margin-left: 15px;
+  margin-top: 5px;
+  border-right: 1px solid var(--dimGrey);
+  padding-right: 15px;
 }
 
 .autosuggestResults {
