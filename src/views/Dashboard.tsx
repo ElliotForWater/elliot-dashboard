@@ -51,7 +51,7 @@ function Dashboard() {
             <h4 className={styles.welcomeSubtitle}>
               Choose your default search engine between Bing or Elliot.
               <br />
-              your clicks will always support clean water projects.
+              Your clicks will always support clean water projects.
             </h4>
             <div className={styles.buttonSearchEngine}>
               <ButtonPrimary size='big' onClick={() => handleDefaultSearchClick('bing')}>
