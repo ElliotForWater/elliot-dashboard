@@ -21,9 +21,10 @@ function Dashboard() {
     /* eslint-enable no-undef */
 
     async function getCountry() {
-      const { country } = await fetchIp()
+      const { location } = await fetchIp()
+      const country = location.country.name
+      console.log({ IsbingMarket: bingMarketCountries.includes(country) })
       setIsBingMarket(bingMarketCountries.includes(country))
-      return country
     }
 
     getCountry()

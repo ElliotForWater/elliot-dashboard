@@ -10,7 +10,6 @@ async function getCurrentTab() {
 
 function openNewTab(param) {
   chrome.tabs.create({
-    selected: false,
     url:  param ? `chrome://newtab?${param}` : 'chrome://newtab'
   })
 }
