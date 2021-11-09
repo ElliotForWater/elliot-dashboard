@@ -19,7 +19,6 @@ export const fetchIp = async function () {
 }
 
 export const bingMarketCountries = [
-  'Albania',
   'Australia',
   'Austria',
   'Belgium',
