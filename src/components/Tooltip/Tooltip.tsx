@@ -36,6 +36,7 @@ const Tooltip = ({ isHidden, children, direction, iconDropEl, setHideTooltip }: 
           [styles[direction]]: direction,
         })}
         ref={tooltipEl}
+        data-testid='tooltip-span'
       >
         {children}
       </span>

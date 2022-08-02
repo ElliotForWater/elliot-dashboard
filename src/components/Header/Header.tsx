@@ -53,7 +53,7 @@ const HeaderHome: FC = () => {
 
           <div className={styles.dropletContainer} onClick={() => setHideTooltip(false)}>
             <p className={styles.dropletCount}>{userState.numOfSearches}</p>
-            <img className={styles.dropletImg} src={WhiteDrop} ref={iconDropEl} />
+            <img className={styles.dropletImg} src={WhiteDrop} ref={iconDropEl} alt='img_icon' data-testid='logo-img' />
             <Tooltip isHidden={hideTooltip} direction='right' iconDropEl={iconDropEl} setHideTooltip={setHideTooltip}>
               This is the number of searches you have done with Elliot for Water. Approximately, every search donates 14
               liters of pure drinking water.
