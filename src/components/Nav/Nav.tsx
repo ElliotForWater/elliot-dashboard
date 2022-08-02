@@ -71,7 +71,7 @@ const Nav = ({ closeTooltip }) => {
             <a href='https://www.facebook.com/elliotforwater/?fref=ts'>Share us on Facebook</a>
           </li>
           <li className={styles.menuItem}>
-            <a target='_blank' href='https://medium.com/@elliotforwater'>
+            <a target='_blank' href='https://elliotforwater.com/blog'>
               Blog
             </a>
           </li>
