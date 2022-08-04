@@ -1,9 +1,11 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { render, screen } from '@testing-library/react'
 import SearchBar from './SearchBar'
 
 describe('SearchBar', () => {
-  it('should render without throwing an error', function () {
-    shallow(<SearchBar defaultSearchEngine='bing' />)
+  it('should render without throwing an error', () => {
+    render(<SearchBar isBingMarket />)
+
+    expect(screen.getByTestId('input-search')).toBeDefined()
   })
 })

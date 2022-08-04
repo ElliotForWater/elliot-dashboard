@@ -14,14 +14,17 @@ module.exports = {
       statements: 100,
     },
   },
-  setupFiles: ['<rootDir>/enzymeConfig.js'],
   preset: 'ts-jest',
   testPathIgnorePatterns: ['/node_modules/', '/tests/', '/coverage/', 'node_modules/(?!@ngrx|(?!deck.gl)|ng-dynamic)'],
   moduleNameMapper: {
     '^.+\\.(css|less)$': '<rootDir>/__mocks__/CssStub.js',
   },
   transform: {
+    '^.+\\.(js|jsx)$': 'babel-jest',
     '.(ts|tsx)': 'ts-jest',
+    '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
+      '<rootDir>/fileTransformer.js',
   },
   transformIgnorePatterns: ['<rootDir>/node_modules/'],
+  testEnvironment: 'jsdom',
 }

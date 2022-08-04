@@ -1,14 +1,17 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { render, screen } from '@testing-library/react'
 import Tooltip from './Tooltip'
 
 describe('Tooltip', () => {
-  it('should render without throwing an error', function () {
-    shallow(
-      <Tooltip isHidden={false} direction='left'>
+  it('should render without throwing an error', () => {
+    const useRefSpy = { current: null }
+    render(
+      <Tooltip isHidden={false} direction='left' iconDropEl={useRefSpy} setHideTooltip={() => console.log('hide')}>
         {' '}
         Some text for the tooltip
       </Tooltip>
     )
+
+    expect(screen.getByTestId('tooltip-span')).toBeDefined()
   })
 })

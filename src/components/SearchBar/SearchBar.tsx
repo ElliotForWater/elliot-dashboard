@@ -219,6 +219,7 @@ const SearchBar = ({ isBingMarket }) => {
             <Input
               name='query'
               type='search'
+              data-testid='input-search'
               value={searchValue}
               className={styles.input}
               onChange={(el) => handleOnChange(el.target.value)}
