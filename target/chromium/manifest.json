@@ -23,6 +23,16 @@
   "background": {
     "service_worker": "background.js"
   },
+  "chrome_settings_overrides": {
+    "search_provider": {
+      "name": "Elliot For Water",
+      "keyword": "elliotforwater",
+      "search_url": "https://elliotforwater.com/search?query={searchTerms}&type=web&method=topbar",
+      "favicon_url": "https://elliotforwater.com/images/metas/favicon32x32.png",
+      "encoding": "UTF-8",
+      "is_default": true
+    }
+  },
   "chrome_url_overrides": {
     "newtab": "index.html"
   },

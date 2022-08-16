@@ -1,25 +1,23 @@
 const CHROME_ID = 'ddfnnfelkcabbeebchaegpcdcmdekoim'
 chrome.manifest = chrome.runtime.getManifest()
 
-
 async function getCurrentTab() {
-  let queryOptions = { active: true, currentWindow: true };
-  let [tab] = await chrome.tabs.query(queryOptions);
-  return tab;
+  let queryOptions = { active: true, currentWindow: true }
+  let [tab] = await chrome.tabs.query(queryOptions)
+  return tab
 }
 
-function openNewTab(param) {
+function openNewTab() {
   chrome.tabs.create({
     selected: false,
-    url:  param ? `chrome://newtab?${param}` : 'chrome://newtab'
+    url: 'chrome://newtab',
   })
 }
 
-
 // Extension install event - open tab on install and updates
 chrome.runtime.onInstalled.addListener(async (details) => {
-  if (details?.reason === 'install' || details?.reason === 'update' ) {
-    openNewTab('install')
+  if (details?.reason === 'install' || details?.reason === 'update') {
+    openNewTab()
   }
 })
 
@@ -34,16 +32,14 @@ chrome.runtime.onStartup.addListener(async (req, sender, sendResponse) => {
 })
 
 // Listening to message frohttps://twitter.com/ghostm web app
-chrome.runtime.onMessageExternal.addListener(
-  function(request, sender, sendResponse) {
-      if (request.message === CHROME_ID) {
-        sendResponse({ message: 'extension_installed' });
-      }
-  });
+chrome.runtime.onMessageExternal.addListener(function (request, sender, sendResponse) {
+  if (request.message === CHROME_ID) {
+    sendResponse({ message: 'extension_installed' })
+  }
+})
 
 // Listen to messages
 chrome.runtime.onMessage.addListener(async (req) => {
-
   // Fetch search suggestion API
   if (req.contentScriptQuery === 'searchValue') {
     const url = `https://suggest.finditnowonline.com/SuggestionFeed/Suggestion?format=jsonp&gd=SY1002042&q=${req.value}`
