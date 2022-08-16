@@ -4,7 +4,7 @@ import SearchBar from './SearchBar'
 
 describe('SearchBar', () => {
   it('should render without throwing an error', () => {
-    render(<SearchBar isBingMarket />)
+    render(<SearchBar />)
 
     expect(screen.getByTestId('input-search')).toBeDefined()
   })

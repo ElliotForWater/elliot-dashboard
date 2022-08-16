@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import fetchJsonp from 'fetch-jsonp'
-import Select, { components } from 'react-select'
 import { Input } from '../Forms/Inputs/Inputs'
 import { UserContext } from '../../context/UserContext'
 import classnames from 'classnames'
@@ -13,71 +12,14 @@ import SearchIconComp from '../Icons/SearchIcon'
 import { queryNoWitheSpace } from '../../helpers/_utils'
 import { extensionApiObject } from '../../App'
 import Drop from '../../images/water_droplet.svg'
-import Bing from '../../images/Bing-Logo1.png'
 
-interface SearchEngineProps {
-  value: string
-  label: string
-  icon: string
-}
-
-const searchEngines = [
-  { value: 'elliot', label: 'Elliot', icon: Drop },
-  { value: 'bing', label: 'Bing', icon: Bing },
-]
-
-const { Option, SingleValue } = components
-const IconOption = (props) => (
-  <Option {...props}>
-    <img className={styles.optionIconImg} src={props.data.icon} style={{ width: 25 }} alt={props.data.label} />
-  </Option>
-)
-
-const SearchBar = ({ isBingMarket }) => {
+const SearchBar = () => {
   const { userState, setUserState } = useContext(UserContext)
   const [searchValue, setSearchValue] = useState<string>('')
   const [highlightIndex, setHighlightIndex] = useState<number>(-1)
   const [isSuggestionOpen, setIsSuggestionOpen] = useState<boolean>(false)
   const [suggestedWords, setSuggestedWords] = useState<Array<string>>([])
   const [searchSuggestedWords, setSearchSuggestedWords] = useState(true)
-
-  const defaultSearchEngine = localStorage.getItem('defaultSearchEngine') || 'bing'
-  const defaultSearchEngineObject: SearchEngineProps =
-    searchEngines.find((engine) => engine.value === defaultSearchEngine) || searchEngines[1]
-  const [searchEngineObj, setSearchEngineObj] = useState(defaultSearchEngineObject)
-
-  const SingleValueIcon = ({ children, ...props }) => (
-    <SingleValue {...props}>
-      <img className={styles.selectedIcon} src={searchEngineObj.icon} alt={searchEngineObj.label} />
-    </SingleValue>
-  )
-
-  const customSelectStyles = {
-    option: (provided, state) => ({
-      padding: 16,
-      backgroundColor: 'white',
-      ':hover': {
-        backgroundColor: 'var(--lightGrey)',
-      },
-    }),
-    menu: (provided, state) => ({
-      top: '17px',
-      position: 'absolute',
-      left: '-10px',
-      paddingTop: 20,
-      width: 55,
-    }),
-    control: (provided, state) => ({
-      display: 'flex',
-      border: '0 transparent',
-    }),
-    container: (provided, state) => ({
-      marginTop: '-10px',
-    }),
-    singleValue: (provided, state) => ({
-      color: 'white',
-    }),
-  }
 
   const methods = useForm({
     defaultValues: {
@@ -178,11 +120,7 @@ const SearchBar = ({ isBingMarket }) => {
 
     setUserState({ numOfSearches: Number(userState.numOfSearches) + 1 })
     const queryNoSpace = queryNoWitheSpace(searchString)
-    const redirectQuery =
-      !isBingMarket || searchEngineObj.value === 'elliot'
-        ? `https://elliotforwater.com/search?query=${queryNoSpace}&type=web`
-        : `${process.env.BING_LINKVERTISE}${queryNoSpace}`
-    window.location.href = redirectQuery
+    window.location.href = `https://elliotforwater.com/search?query=${queryNoSpace}&type=web`
 
     resetDropdown()
   }
@@ -204,11 +142,6 @@ const SearchBar = ({ isBingMarket }) => {
     } else {
       setIsSuggestionOpen(false)
     }
-  }
-
-  function handleChangeSearch(newSearchObj) {
-    setSearchEngineObj(newSearchObj)
-    localStorage.setItem('defaultSearchEngine', newSearchObj.value)
   }
 
   return (
@@ -236,19 +169,7 @@ const SearchBar = ({ isBingMarket }) => {
               <img className={styles.searchIcon} src={SearchIcon} />
             </button>
             <div className={styles.selectDefaultSearch}>
-              {isBingMarket ? (
-                <Select
-                  isMulti={false}
-                  isSearchable={false}
-                  styles={customSelectStyles}
-                  defaultValue={searchEngineObj}
-                  options={searchEngines}
-                  components={{ Option: IconOption, SingleValue: SingleValueIcon }}
-                  onChange={handleChangeSearch}
-                />
-              ) : (
-                <img className={styles.iconElliot} src={Drop} alt='elliot' />
-              )}
+              <img className={styles.iconElliot} src={Drop} alt='elliot' />
             </div>
           </form>
         </div>
