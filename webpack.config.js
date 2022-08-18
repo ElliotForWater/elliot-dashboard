@@ -72,6 +72,7 @@ const config = {
 
             options: {
               limit: 10000,
+              name: 'images/[hash]-[name].[ext]',
             },
           },
         ],
